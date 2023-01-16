@@ -2,7 +2,7 @@
 *the home for writers, journalers, and others*
 
 ## First Release
-MiZaWra is a minimalistically designed writing app - providing various kinds of prompts to its users, if they want it. Users can login and then select different modes to write: 
+MiZaWra is a minimalistic designed writing app - providing various kinds of prompts to its users, if they want it. Users can login and then select different modes to write: 
 
 ### Modes
 - **Free Journaling** 
