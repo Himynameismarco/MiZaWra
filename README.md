@@ -17,9 +17,9 @@ This mode has three sub-modes:
   
 - **Prompts for Writing Stories**
 This mode has three sub-modes: 
-  - stimulus story - word (you get a prompt word and you should write a story about it) 
-  - stimulus story - words (you get a few words and your should write a story that contains all of these words)
-  - stimulus story - paragraph (you get a few sentences and you should write a story about it/ expand what is written there - feel free to change it completely on the way) 
+  - Stimulus Story - Word (you get a prompt word and you should write a story about it) 
+  - Stimulus Story - Words (you get a few words and your should write a story that contains all of these words)
+  - Stimulus Story - Paragraph (you get a few sentences and you should write a story about it/ expand what is written there - feel free to change it completely on the way) 
 
 ### Profile
 Moreover, users have their own profile. They can review texts they have written (based on category), edit them and they are sorted in chronological order (the category with the newest text is first, then the category that has the newest text from all other categories, and so on). 
