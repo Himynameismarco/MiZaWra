@@ -13,7 +13,7 @@ This mode has three sub-modes:
   - Positive (you get positive prompts that will try to make you think about positive stuff) 
   - Neutral (Reflections about yourself, your previous life, your current life, your family - of course that might not be neutral)
   - Philosophical (reflecting some more philosophical questions, like: What is time? Why is there anything rather than nothing? Who is you - the one who thinks or the one you are thinking about when you are thinking of yourself? If there is a god, what is He/She/It like? ) 
-  - (Negative (this mode will face negative moments — I’d say, let’s skip this mode for now)
+  - (Negative (this mode will face negative moments — I’d say, let’s skip this mode for now))
   
 - **Prompts for Writing Stories**
 This mode has three sub-modes: 
