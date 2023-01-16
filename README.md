@@ -1,7 +1,7 @@
 # MiZaWra
 *the home for writers, journalers, and others*
 
-## Plans for the First Release
+## First Release
 MiZaWra is a minimalistically designed writing app - providing various kinds of prompts to its users, if they want it. Users can login and then select different modes to write: 
 
 ### Modes
@@ -27,7 +27,7 @@ Moreover, users have their own profile. They can review texts they have written 
 ### Languages
 The app will be available in English and German, hopefully Ukrainian, too. 
 
-## Plans for Future Releases
+## Future Releases
 These are our plans for future releases
 
 ### Auto-save
