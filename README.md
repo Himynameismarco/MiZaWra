@@ -44,4 +44,4 @@ Users can add other fellow writers and follow them and see if they have submitte
 And in his/her profile the person will be able to select texts as “private” or “shared with friends”. 
 
 ### Profile Picture
-Writers will have the ability to add a profile picture. 
+Writers will have the ability to add a profile picture.  
