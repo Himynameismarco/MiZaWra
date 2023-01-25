@@ -1,14 +1,28 @@
 package com.project.mizawra.models;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import java.util.Objects;
 import java.util.UUID;
 
+@Entity
 public class Prompt {
+    @Id
+    @GeneratedValue
     private UUID id;
+    @Enumerated(EnumType.ORDINAL)
     private Mode mode;
     private String prompt;
 
     public Prompt() {
+    }
+
+    public Prompt(Mode mode, String prompt) {
+        this.mode = mode;
+        this.prompt = prompt;
     }
 
     public UUID getId() {

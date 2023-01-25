@@ -1,13 +1,27 @@
 package com.project.mizawra.models;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
+@Entity
 public class Journal {
+    @Id
+    @GeneratedValue
     private UUID id;
-    private User owner;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "owner_id", nullable = false)
+    private Client owner;
     private LocalDateTime postedDate;
+    @Enumerated(EnumType.ORDINAL)
     private Mode mode;
     private String title;
     private String body;
@@ -15,7 +29,7 @@ public class Journal {
     public Journal() {
     }
 
-    public Journal(User owner, LocalDateTime postedDate, Mode mode, String title, String body) {
+    public Journal(Client owner, LocalDateTime postedDate, Mode mode, String title, String body) {
         this.owner = owner;
         this.postedDate = postedDate;
         this.mode = mode;
@@ -31,11 +45,11 @@ public class Journal {
         this.id = id;
     }
 
-    public User getOwner() {
+    public Client getOwner() {
         return owner;
     }
 
-    public void setOwner(User owner) {
+    public void setOwner(Client owner) {
         this.owner = owner;
     }
 

@@ -1,21 +1,33 @@
 package com.project.mizawra.models;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
-public class User {
+@Entity
+public class Client {
+    @Id
+    @GeneratedValue
     private UUID id;
     private String firstName;
     private String lastName;
+    @Column(unique = true)
     private String email;
     private String password;
+    @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Journal> journals;
 
-    public User() {
+    public Client() {
     }
 
-    public User(String firstName, String lastName, String email, String password) {
+    public Client(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -74,9 +86,9 @@ public class User {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return id.equals(user.id) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName,
-                user.lastName) && email.equals(user.email);
+        Client client = (Client) o;
+        return id.equals(client.id) && Objects.equals(firstName, client.firstName) && Objects.equals(lastName,
+                client.lastName) && email.equals(client.email);
     }
 
     @Override
