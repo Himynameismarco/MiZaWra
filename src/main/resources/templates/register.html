@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>MiZaWra</title>
+    </head>
+    <body>
+        <form action="register" th:object="${client}" method="post">
+            <label for="firstName">First name:</label><br>
+            <input type="text" id="firstName" name="firstName"><br>
+            <label for="lastName">Last name:</label><br>
+            <input type="text" id="lastName" name="lastName"><br>
+            <label for="email">EMAIL</label><br>
+            <input type="email" id="email" name="email" placeholder="momo@mizawra.com"><br>
+            <label for="password">PASSWORD</label><br>
+            <input type="password" id="password" name="password" placeholder="*********"><br><br>
+
+            <input name="submit" type="submit" value="Submit" />
+        </form>
+    </body>
+</html>
