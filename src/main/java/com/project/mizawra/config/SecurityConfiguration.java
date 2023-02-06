@@ -18,11 +18,7 @@ public class SecurityConfiguration {
   @Autowired
   private UserDetailsService userDetailsService;
 
-  @Autowired
-  public void configureGlobal(AuthenticationManagerBuilder auth) {
-    auth.authenticationProvider(authProvider());
-  }
-
+  @Bean
   public DaoAuthenticationProvider authProvider() {
     DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
     authProvider.setUserDetailsService(userDetailsService);
@@ -44,6 +40,7 @@ public class SecurityConfiguration {
     return http.build();
   }
 
+  @Bean
   public PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
   }

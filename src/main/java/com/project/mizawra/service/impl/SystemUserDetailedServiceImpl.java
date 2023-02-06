@@ -1,4 +1,4 @@
-package com.project.mizawra.service;
+package com.project.mizawra.service.impl;
 
 import com.project.mizawra.dao.ClientRepository;
 import com.project.mizawra.models.Client;
@@ -11,10 +11,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service("userDetailsService")
-public class SystemUserDetailedService implements UserDetailsService {
+public class SystemUserDetailedServiceImpl implements UserDetailsService {
     private final ClientRepository clientRepository;
 
-    public SystemUserDetailedService(ClientRepository clientRepository) {
+    public SystemUserDetailedServiceImpl(ClientRepository clientRepository) {
         this.clientRepository = clientRepository;
     }
 
