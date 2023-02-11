@@ -1,7 +1,9 @@
 package com.project.mizawra.service.impl;
 
 import com.project.mizawra.dao.ClientRepository;
+import com.project.mizawra.dao.VerificationTokenRepository;
 import com.project.mizawra.models.Client;
+import com.project.mizawra.models.VerificationToken;
 import com.project.mizawra.models.dto.ClientDto;
 import com.project.mizawra.service.ClientService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -10,10 +12,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class ClientServiceImpl implements ClientService {
     private final ClientRepository clientRepository;
+    private final VerificationTokenRepository verificationTokenRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public ClientServiceImpl(ClientRepository clientRepository, PasswordEncoder passwordEncoder) {
+    public ClientServiceImpl(ClientRepository clientRepository, VerificationTokenRepository verificationTokenRepository,
+                             PasswordEncoder passwordEncoder) {
         this.clientRepository = clientRepository;
+        this.verificationTokenRepository = verificationTokenRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -31,5 +36,20 @@ public class ClientServiceImpl implements ClientService {
         client.setPassword(passwordEncoder.encode(clientDto.getPassword()));
 
         return clientRepository.save(client);
+    }
+
+    @Override
+    public Client save(Client client) {
+        return clientRepository.save(client);
+    }
+
+    @Override
+    public VerificationToken getVerificationToken(String token) {
+        return verificationTokenRepository.findByToken(token).orElse(null);
+    }
+
+    @Override
+    public VerificationToken createVerificationToken(String token, Client client) {
+        return verificationTokenRepository.save(new VerificationToken(token, client));
     }
 }

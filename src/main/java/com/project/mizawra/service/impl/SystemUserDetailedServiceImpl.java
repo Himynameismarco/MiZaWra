@@ -24,6 +24,10 @@ public class SystemUserDetailedServiceImpl implements UserDetailsService {
         if (optionalClient.isPresent()) {
             Client client = optionalClient.get();
 
+            if (!client.isActive()) {
+                throw new UsernameNotFoundException("User is not active");
+            }
+
             //TODO think do we need authorities or not (3 parameter in constructor)
             return new User(client.getEmail(), client.getPassword(), new ArrayList<>());
         }
