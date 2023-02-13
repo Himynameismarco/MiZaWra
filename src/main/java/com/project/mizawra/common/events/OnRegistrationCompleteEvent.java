@@ -1,4 +1,4 @@
-package com.project.mizawra.events;
+package com.project.mizawra.common.events;
 
 import com.project.mizawra.models.Client;
 import java.util.Locale;

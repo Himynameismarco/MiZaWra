@@ -24,7 +24,7 @@ public class SystemUserDetailedServiceImpl implements UserDetailsService {
         if (optionalClient.isPresent()) {
             Client client = optionalClient.get();
 
-            if (!client.isActive()) {
+            if (!client.getActive()) {
                 throw new UsernameNotFoundException("User is not active");
             }
 

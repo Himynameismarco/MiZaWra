@@ -28,8 +28,8 @@ public class Client {
     private String password;
     @NotNull
     private Boolean active;
-    @OneToOne(mappedBy = "client")
-    private VerificationToken verificationToken;
+    @OneToMany(mappedBy = "client")
+    private List<VerificationToken> verificationToken;
     @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Journal> journals;
 
@@ -84,20 +84,19 @@ public class Client {
     public void setPassword(String password) {
         this.password = password;
     }
-
-    public Boolean isActive() {
+    public Boolean getActive() {
         return active;
     }
 
-    public void setActive(boolean active) {
+    public void setActive(Boolean active) {
         this.active = active;
     }
 
-    public VerificationToken getVerificationToken() {
+    public List<VerificationToken> getVerificationToken() {
         return verificationToken;
     }
 
-    public void setVerificationToken(VerificationToken verificationToken) {
+    public void setVerificationToken(List<VerificationToken> verificationToken) {
         this.verificationToken = verificationToken;
     }
 

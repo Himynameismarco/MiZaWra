@@ -3,9 +3,11 @@ package com.project.mizawra.service.impl;
 import com.project.mizawra.dao.ClientRepository;
 import com.project.mizawra.dao.VerificationTokenRepository;
 import com.project.mizawra.models.Client;
+import com.project.mizawra.models.TokenType;
 import com.project.mizawra.models.VerificationToken;
 import com.project.mizawra.models.dto.ClientDto;
 import com.project.mizawra.service.ClientService;
+import java.util.UUID;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -49,7 +51,20 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public VerificationToken createVerificationToken(String token, Client client) {
-        return verificationTokenRepository.save(new VerificationToken(token, client));
+    public VerificationToken createVerificationToken(String token, TokenType type, Client client) {
+        return verificationTokenRepository.save(new VerificationToken(token, type, client));
+    }
+
+    @Override
+    public VerificationToken regenerateVerificationToken(VerificationToken token) {
+        Client client = token.getClient();
+
+        verificationTokenRepository.delete(token);
+        return createVerificationToken(UUID.randomUUID().toString(), token.getType(), client);
+    }
+
+    @Override
+    public void deleteVerificationToken(String token) {
+        verificationTokenRepository.deleteAllByToken(token);
     }
 }

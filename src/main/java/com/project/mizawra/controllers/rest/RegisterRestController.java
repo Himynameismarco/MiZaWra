@@ -1,6 +1,6 @@
 package com.project.mizawra.controllers.rest;
 
-import com.project.mizawra.events.OnRegistrationCompleteEvent;
+import com.project.mizawra.common.events.OnRegistrationCompleteEvent;
 import com.project.mizawra.models.Client;
 import com.project.mizawra.models.dto.ClientDto;
 import com.project.mizawra.service.ClientService;

@@ -2,10 +2,13 @@ package com.project.mizawra.models;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -24,17 +27,20 @@ public class VerificationToken {
     @NotBlank
     @Column(unique = true)
     private String token;
-    @OneToOne(fetch = FetchType.EAGER, targetEntity = Client.class)
+    @ManyToOne(fetch = FetchType.EAGER, targetEntity = Client.class)
     @JoinColumn(name = "client_id", nullable = false)
     private Client client;
+    @Enumerated(EnumType.ORDINAL)
+    private TokenType type;
     @NotNull
     private LocalDateTime expiryDate;
 
     public VerificationToken() {
     }
 
-    public VerificationToken(@NotBlank String token, @NotNull Client client) {
+    public VerificationToken(@NotBlank String token,TokenType type, @NotNull Client client) {
         this.token = token;
+        this.type = type;
         this.client = client;
         this.expiryDate = LocalDateTime.now().plusDays(EXPIRATION);
     }
@@ -63,6 +69,14 @@ public class VerificationToken {
         this.client = client;
     }
 
+    public TokenType getType() {
+        return type;
+    }
+
+    public void setType(TokenType type) {
+        this.type = type;
+    }
+
     public LocalDateTime getExpiryDate() {
         return expiryDate;
     }
@@ -80,18 +94,18 @@ public class VerificationToken {
             return false;
         }
         VerificationToken that = (VerificationToken) o;
-        return id.equals(that.id) && token.equals(that.token) && client.equals(that.client) && expiryDate.equals(
-                that.expiryDate);
+        return id.equals(that.id) && token.equals(that.token) && client.equals(that.client) && type == that.type
+                && Objects.equals(expiryDate, that.expiryDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, token, client, expiryDate);
+        return Objects.hash(id, token, client, type, expiryDate);
     }
 
     @Override
     public String toString() {
-        return "VerificationToken{" + "id='" + id + '\'' + ", token='" + token + '\'' + ", client=" + client
+        return "VerificationToken{" + "id=" + id + ", token='" + token + '\'' + ", client=" + client + ", type=" + type
                 + ", expiryDate=" + expiryDate + '}';
     }
 }
