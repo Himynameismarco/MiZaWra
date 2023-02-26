@@ -16,6 +16,10 @@ form p {
     margin: 0;
 }
 
+form a {
+    color: #3A6BA4;
+}
+
 .login-form {
     width: 560px;
     padding: 36px 0;
@@ -31,5 +35,6 @@ form p {
     padding: 15px;
     margin: 15px 100px;
     background: #232223;
+    border: none;
     border-radius: 10px;
 }

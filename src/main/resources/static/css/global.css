@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600,300");
 @import url("https://fonts.googleapis.com/css?family=Chivo:900");
+
 body {
     background-color: #0F1010;
     color: white;
@@ -40,5 +41,6 @@ body a {
     color: white;
     background-color: #232223;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
+    border: none;
     border-radius: 10px;
 }
