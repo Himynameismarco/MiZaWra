@@ -6,7 +6,6 @@ import com.project.mizawra.models.VerificationToken;
 import com.project.mizawra.models.dto.ClientDto;
 import com.project.mizawra.service.ClientService;
 import jakarta.servlet.http.HttpServletRequest;
-import java.time.LocalDateTime;
 import java.util.Locale;
 import org.springframework.context.MessageSource;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -49,7 +48,7 @@ public class RegisterController {
         }
 
         Client client = verificationToken.getClient();
-        if (verificationToken.getExpiryDate().isBefore(LocalDateTime.now())) {
+        if (clientService.isTokenExpired(verificationToken)) {
             VerificationToken newToken = clientService.regenerateVerificationToken(verificationToken);
             mailSender.send(emailTemplateFactory.getRegisteredTokenRegenerated(newToken, request.getLocale()));
 
@@ -62,5 +61,24 @@ public class RegisterController {
         clientService.save(client);
         clientService.deleteVerificationToken(verificationToken.getToken());
         return "redirect:/login";
+    }
+
+    @GetMapping("/forgetPassword")
+    public String forgetPassword() {
+        return "forgetPassword";
+    }
+
+    @GetMapping("/changePassword")
+    public String changePassword(@RequestParam("token") String token, HttpServletRequest request, Model model) {
+        VerificationToken verificationToken = clientService.getVerificationToken(token);
+        Locale locale = request.getLocale();
+        if (verificationToken == null || clientService.isTokenExpired(verificationToken)) {
+            String message = messages.getMessage("auth.message.invalidToken", null, locale);
+            model.addAttribute("message", message);
+            return "message";
+        }
+
+        model.addAttribute("token", verificationToken);
+        return "changePassword";
     }
 }

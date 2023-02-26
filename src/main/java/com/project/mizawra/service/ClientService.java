@@ -6,11 +6,14 @@ import com.project.mizawra.models.VerificationToken;
 import com.project.mizawra.models.dto.ClientDto;
 
 public interface ClientService {
+    Client getClient(String email);
     Client registerClient(ClientDto clientDto) throws Exception;
     Client save(Client client);
+    void changeClientPassword(Client client, String newPassword);
 
     VerificationToken getVerificationToken(String token);
     VerificationToken createVerificationToken(String token, TokenType type, Client client);
     VerificationToken regenerateVerificationToken(VerificationToken token);
     void deleteVerificationToken(String token);
+    boolean isTokenExpired(VerificationToken token);
 }

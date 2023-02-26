@@ -1,0 +1,8 @@
+.login-form {
+    width: 560px;
+    padding: 36px 46px;
+
+    box-sizing: border-box;
+    border: 3px solid #252626;
+    border-radius: 10px;
+}

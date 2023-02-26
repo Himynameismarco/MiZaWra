@@ -7,6 +7,7 @@ import com.project.mizawra.models.TokenType;
 import com.project.mizawra.models.VerificationToken;
 import com.project.mizawra.models.dto.ClientDto;
 import com.project.mizawra.service.ClientService;
+import java.time.LocalDateTime;
 import java.util.UUID;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,11 @@ public class ClientServiceImpl implements ClientService {
         this.clientRepository = clientRepository;
         this.verificationTokenRepository = verificationTokenRepository;
         this.passwordEncoder = passwordEncoder;
+    }
+
+    @Override
+    public Client getClient(String email) {
+        return clientRepository.findByEmail(email).orElse(null);
     }
 
     @Override
@@ -46,6 +52,12 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
+    public void changeClientPassword(Client client, String newPassword) {
+        client.setPassword(passwordEncoder.encode(newPassword));
+        save(client);
+    }
+
+    @Override
     public VerificationToken getVerificationToken(String token) {
         return verificationTokenRepository.findByToken(token).orElse(null);
     }
@@ -66,5 +78,10 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public void deleteVerificationToken(String token) {
         verificationTokenRepository.deleteAllByToken(token);
+    }
+
+    @Override
+    public boolean isTokenExpired(VerificationToken token) {
+        return token.getExpiryDate().isBefore(LocalDateTime.now());
     }
 }

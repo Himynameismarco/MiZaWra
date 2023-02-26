@@ -1,0 +1,35 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600,300");
+@import url("https://fonts.googleapis.com/css?family=Chivo:900");
+body {
+    background-color: #0F1010;
+    color: white;
+    margin: 0;
+    font-family: 'Open Sans';
+}
+
+body a {
+    text-decoration: none;
+    color: white;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 42px 84px;
+}
+
+.navbar a {
+    font-weight: 800;
+    font-size: 24px;
+    line-height: 33px;
+}
+
+.navbar .menu {
+    display: flex;
+    gap: 60px;
+}
+
+.logo {
+    font-family: 'Chivo';
+    font-size: 28px;
+}

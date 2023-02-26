@@ -6,8 +6,11 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>MiZaWra</title>
+
+        <link href="/css/global.css" rel="stylesheet"/>
     </head>
     <body>
+        <nav th:replace="~{../fragment/navbar :: navbar}"></nav>
         <form action="register" th:object="${client}" method="post">
             <label for="firstName">First name:</label><br>
             <input type="text" id="firstName" name="firstName"><br>

@@ -1,17 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MiZaWra</title>
+
+    <link href="/css/global.css" rel="stylesheet"/>
+    <link href="/css/login.css" rel="stylesheet"/>
   </head>
   <body>
+    <nav th:replace="~{../fragment/navbar :: navbar}"></nav>
     <form action="login" method="post">
-      <label for="username">EMAIL</label><br>
-      <input type="email" id="username" name="username" placeholder="momo@mizawra.com"><br>
-      <label for="password">PASSWORD</label><br>
-      <input type="password" id="password" name="password" placeholder="*********"><br><br>
-      <input name="submit" type="submit" value="Submit" />
+      <div class="login-form">
+        <h1>Welcome back</h1>
+        <input type="email" id="username" name="username" placeholder="E-mail"><br>
+        <input type="password" id="password" name="password" placeholder="Password"><br><br>
+        <a href="/register/forgetPassword">Forget password</a>
+      </div>
+      <input name="submit" type="submit" value="Login" />
     </form>
   </body>
 </html>

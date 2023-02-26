@@ -1,14 +1,14 @@
-package com.project.mizawra.common.events;
+package com.project.mizawra.common.event;
 
 import com.project.mizawra.models.Client;
 import java.util.Locale;
 import org.springframework.context.ApplicationEvent;
 
-public class OnRegistrationCompleteEvent extends ApplicationEvent {
+public class GeneralEvent extends ApplicationEvent {
     private Client client;
     private Locale locale;
 
-    public OnRegistrationCompleteEvent(Client client, Locale locale) {
+    public GeneralEvent(Client client, Locale locale) {
         super(client);
         this.client = client;
         this.locale = locale;
