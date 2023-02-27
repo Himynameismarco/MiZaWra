@@ -12,8 +12,8 @@
     </head>
     <body>
         <nav th:replace="~{../fragment/navbar :: navbar}"></nav>
-        <form class="register" action="register" th:object="${client}" method="post">
-            <div class="login-form">
+        <form class="form register" action="register" th:object="${client}" method="post">
+            <div class="input-form">
                 <h1>Registration</h1>
                 <input type="text" id="firstName" name="firstName" placeholder="First name"><br>
                 <input type="text" id="lastName" name="lastName" placeholder="Last name"><br>

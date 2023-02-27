@@ -1,4 +1,4 @@
-form {
+.form {
     display: grid;
     justify-items: center;
     gap: 20px;
@@ -12,33 +12,16 @@ form {
     bottom: 0;
 }
 
-form p {
-    margin: 0;
-}
-
-form a {
-    color: #3A6BA4;
-}
-
-form.register {
+.form.register {
     top: 10%;
 }
 
-.login-form {
+.input-form {
     width: 560px;
     padding: 36px 0;
     text-align: center;
 
     box-sizing: border-box;
     border: 3px solid #252626;
-    border-radius: 10px;
-}
-
-.login-form input {
-    width: -webkit-fill-available;
-    padding: 15px;
-    margin: 15px 100px;
-    background: #232223;
-    border: none;
     border-radius: 10px;
 }
