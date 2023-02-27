@@ -20,6 +20,10 @@ form a {
     color: #3A6BA4;
 }
 
+form.register {
+    top: 10%;
+}
+
 .login-form {
     width: 560px;
     padding: 36px 0;
