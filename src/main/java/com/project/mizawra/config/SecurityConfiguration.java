@@ -18,11 +18,7 @@ public class SecurityConfiguration {
   @Autowired
   private UserDetailsService userDetailsService;
 
-  @Autowired
-  public void configureGlobal(AuthenticationManagerBuilder auth) {
-    auth.authenticationProvider(authProvider());
-  }
-
+  @Bean
   public DaoAuthenticationProvider authProvider() {
     DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
     authProvider.setUserDetailsService(userDetailsService);
@@ -33,7 +29,8 @@ public class SecurityConfiguration {
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http.csrf().disable().authorizeHttpRequests()
-        .requestMatchers("/login*").permitAll()
+        .requestMatchers("/login*", "/register/**", "/forgetPassword", "/savePassword",
+                "/js/**", "/css/**", "/fragment/**").permitAll()
         .anyRequest().authenticated()
         .and()
         .formLogin().loginPage("/login")
@@ -44,6 +41,7 @@ public class SecurityConfiguration {
     return http.build();
   }
 
+  @Bean
   public PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
   }

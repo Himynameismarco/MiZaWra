@@ -1,4 +1,4 @@
-package com.project.mizawra.service;
+package com.project.mizawra.service.impl;
 
 import com.project.mizawra.dao.ClientRepository;
 import com.project.mizawra.models.Client;
@@ -11,10 +11,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service("userDetailsService")
-public class SystemUserDetailedService implements UserDetailsService {
+public class SystemUserDetailedServiceImpl implements UserDetailsService {
     private final ClientRepository clientRepository;
 
-    public SystemUserDetailedService(ClientRepository clientRepository) {
+    public SystemUserDetailedServiceImpl(ClientRepository clientRepository) {
         this.clientRepository = clientRepository;
     }
 
@@ -23,6 +23,10 @@ public class SystemUserDetailedService implements UserDetailsService {
         Optional<Client> optionalClient = clientRepository.findByEmail(username);
         if (optionalClient.isPresent()) {
             Client client = optionalClient.get();
+
+            if (!client.getActive()) {
+                throw new UsernameNotFoundException("User is not active");
+            }
 
             //TODO think do we need authorities or not (3 parameter in constructor)
             return new User(client.getEmail(), client.getPassword(), new ArrayList<>());

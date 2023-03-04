@@ -31,6 +31,9 @@ This mode has three sub-modes:
 ### Local variables:
 - JDBC_DATABASE_URL = link to your local database (for ex. jdbc:postgresql://localhost:5432/postgres?user=postgres&password=password)
 - PORT = free port on your machine (for ex. 8080)
+- DOMAIN = domain of our website (locally it's http://localhost:8080)
+- EMAIL_LOGIN = login to our email 
+- EMAIL_PSSWD = password to email
 
 ### Setup database
 1. Open pgAdmin (or any other GUI for PostgreSQL)
