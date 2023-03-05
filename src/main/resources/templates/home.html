@@ -13,7 +13,7 @@
     <nav th:replace="~{../fragment/navbar :: navbar}"></nav>
     <div class="home">
         <div class="user-bar">
-            <img src="/images/profile.svg">
+            <img height="128px" width="128px" src="/images/profile.jpg">
             <div class="user-info">
                 <h2 th:text="${client.getFirstName() + ' ' + client.getLastName()}"></h2>
                 <p class="description">*Question*: What should I write here? </p>
