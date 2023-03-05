@@ -34,7 +34,7 @@
     color: white;
 }
 
-.user-bar .description {
+.description {
     color: #EBECF1;
     opacity: 0.4;
 }
@@ -55,4 +55,14 @@
     padding: 30px;
     box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.4);
     border-radius: 10px;
+}
+
+.journal {
+    display: grid;
+    grid-template-rows: 30px 1fr 25px;
+
+    background: #232223;
+    padding: 20px;
+    border-radius: 10px;
+    aspect-ratio: 1 / 1;
 }
