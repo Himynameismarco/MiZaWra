@@ -11,15 +11,21 @@
 </head>
 <body>
     <nav th:replace="~{../fragment/navbar :: navbar}"></nav>
-    <div>
+    <div class="home">
         <div class="user-bar">
             <img src="/images/profile.svg">
             <div class="user-info">
-                <p th:text="${client.getFirstName() + ' ' + client.getLastName()}"></p>
+                <h2 th:text="${client.getFirstName() + ' ' + client.getLastName()}"></h2>
                 <p class="description">*Question*: What should I write here? </p>
             </div>
             <span class="link">33 posts</span>
             <a class="link" href="/about">about MIZAWRA</a>
+        </div>
+        <h1>create a new narrative</h1>
+        <div class="menu">
+            <a href="/promptedJournal" style="background: #3A6BA4;">prompted journal</a>
+            <a href="/freeJournal" style="background: #3AA451;">free journal</a>
+            <a href="/story" style="background: #8062FF;">story</a>
         </div>
     </div>
 </body>
