@@ -25,3 +25,7 @@
     border: 3px solid #252626;
     border-radius: 10px;
 }
+
+h1 {
+    margin: 15px 0;
+}
