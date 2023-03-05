@@ -1,0 +1,23 @@
+.user-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+}
+
+.user-info {
+    width: 550px;
+    align-self: baseline;
+    margin: 20px 0;
+}
+
+.link {
+    width: min-content;
+    text-align: center;
+    color: white;
+}
+
+.user-bar .description {
+    color: #EBECF1;
+    opacity: 0.4;
+}

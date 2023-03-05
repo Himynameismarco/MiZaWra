@@ -7,11 +7,20 @@
     <meta charset="UTF-8">
 
     <link href="/css/global.css" rel="stylesheet"/>
+    <link href="/css/home.css" rel="stylesheet">
 </head>
 <body>
     <nav th:replace="~{../fragment/navbar :: navbar}"></nav>
     <div>
-        Some very important text here.
+        <div class="user-bar">
+            <img src="/images/profile.svg">
+            <div class="user-info">
+                <p th:text="${client.getFirstName() + ' ' + client.getLastName()}"></p>
+                <p class="description">*Question*: What should I write here? </p>
+            </div>
+            <span class="link">33 posts</span>
+            <a class="link" href="/about">about MIZAWRA</a>
+        </div>
     </div>
 </body>
 </html>

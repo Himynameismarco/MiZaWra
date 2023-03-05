@@ -9,6 +9,8 @@ import com.project.mizawra.models.dto.ClientDto;
 import com.project.mizawra.service.ClientService;
 import java.time.LocalDateTime;
 import java.util.UUID;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -26,8 +28,22 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
+    public Client getAuthenticatedClient() {
+        if (!isAnonymous()) {
+            return getClient(((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+        }
+
+        return null;
+    }
+
+    @Override
     public Client getClient(String email) {
         return clientRepository.findByEmail(email).orElse(null);
+    }
+
+    @Override
+    public Client getClientById(String id) {
+        return clientRepository.findById(UUID.fromString(id)).orElse(null);
     }
 
     @Override
@@ -83,5 +99,9 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public boolean isTokenExpired(VerificationToken token) {
         return token.getExpiryDate().isBefore(LocalDateTime.now());
+    }
+
+    private boolean isAnonymous() {
+        return SecurityContextHolder.getContext().getAuthentication().getName().equals("anonymousUser");
     }
 }
