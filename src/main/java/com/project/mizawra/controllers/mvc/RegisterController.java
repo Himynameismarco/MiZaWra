@@ -34,7 +34,7 @@ public class RegisterController {
     @GetMapping
     public String register(Model model) {
         model.addAttribute("client", new ClientDto());
-        return "register";
+        return "login/register";
     }
 
     @GetMapping("/confirm")
@@ -65,7 +65,7 @@ public class RegisterController {
 
     @GetMapping("/forgetPassword")
     public String forgetPassword() {
-        return "forgetPassword";
+        return "login/forgetPassword";
     }
 
     @GetMapping("/changePassword")
@@ -79,6 +79,6 @@ public class RegisterController {
         }
 
         model.addAttribute("token", verificationToken);
-        return "changePassword";
+        return "login/changePassword";
     }
 }

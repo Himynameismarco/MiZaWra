@@ -34,6 +34,6 @@ public class HomeController {
         if (message != null) {
             model.addAttribute("message", message);
         }
-        return "login";
+        return "login/login";
     }
 }

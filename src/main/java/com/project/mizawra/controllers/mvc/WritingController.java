@@ -14,4 +14,9 @@ public class WritingController {
     public String getStory() {
         return "story";
     }
+
+    @RequestMapping("/write")
+    public String getWritingPage() {
+        return "writing";
+    }
 }

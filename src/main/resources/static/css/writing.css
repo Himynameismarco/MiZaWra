@@ -1,0 +1,17 @@
+.container {
+    position: relative;
+    text-align: center;
+
+    margin: 0 84px;
+    padding: 35px 150px;
+
+    background: #1A1C1C;
+    border: 2px solid #484E4E;
+    border-radius: 10px;
+}
+
+.time-container {
+    position: absolute;
+    top: 40px;
+    right: 40px;
+}
