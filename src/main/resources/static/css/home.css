@@ -34,11 +34,6 @@
     color: white;
 }
 
-.color-grey {
-    color: #EBECF1;
-    opacity: 0.4;
-}
-
 .menu {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;

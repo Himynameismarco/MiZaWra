@@ -1,4 +1,11 @@
+body {
+    height: 70vh;
+}
+
 .container {
+    height: 100%;
+    display: grid;
+    grid-template-rows: auto auto 1fr;
     position: relative;
     text-align: center;
 
@@ -10,8 +17,56 @@
     border-radius: 10px;
 }
 
+.writing-header {
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .time-container {
     position: absolute;
     top: 40px;
     right: 40px;
+}
+
+.prompt-container {
+    padding: 20px 0;
+}
+
+.textarea-container {
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+textarea {
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 30px;
+
+    color: #EBECF1;
+
+    width: 100%;
+
+    background: none;
+    border: none;
+    overflow: auto;
+    outline: none;
+
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+
+    resize: none;
+}
+
+button {
+    font-weight: 800;
+    font-size: 24px;
+    line-height: 29px;
+
+    color: #FFFFFF;
+    padding: 35px 65px;
+    background: #3AA451;
+    border-radius: 10px;
 }
