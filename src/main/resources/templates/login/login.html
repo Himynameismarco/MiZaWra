@@ -20,8 +20,10 @@
         <a href="/register/forgetPassword" th:text="#{login.forgotPW}"></a>
       </div>
       <input class="button" name="submit" type="submit" value="Login" />
-      <p th:text="#{login.noAccount}"></p>
-      <p><a href="/register" th:text="#{login.signUp}"></a></p>
+      <div class="footer">
+        <p th:text="#{login.noAccount}"></p>
+        <a href="/register" th:text="#{login.signUp}"></a>
+      </div>
     </form>
   </body>
 </html>

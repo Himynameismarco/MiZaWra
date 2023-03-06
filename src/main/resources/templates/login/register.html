@@ -22,7 +22,10 @@
             </div>
 
             <input class="button" name="submit" type="submit" th:value="#{register.createAccountButton}" />
-            <p th:text="#{register.alreadyAccount}"></p><p><a href="/login">Login</a></p>
+            <div class="footer">
+                <p th:text="#{register.alreadyAccount}"></p>
+                <a href="/login">Login</a>
+            </div>
         </form>
     </body>
 </html>
