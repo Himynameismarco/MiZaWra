@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>MiZaWra</title>
+    <meta charset="UTF-8">
+
+    <link href="/css/global.css" rel="stylesheet"/>
+    <link href="/css/writing.css" rel="stylesheet">
+</head>
+<body>
+    <nav th:replace="~{../fragment/navbar :: navbar}"></nav>
+    <div class="container">
+        <div class="writing-header">
+            <h1>...time to write...</h1>
+            <div class="time-container">
+                <h1>14:53</h1>
+                <p class="color-grey">click to pause/start</p>
+            </div>
+        </div>
+        <div class="prompt-container d-none">
+            <p class="color-grey">your prompt</p>
+            <h3>What can you hope for?</h3>
+        </div>
+        <div class="textarea-container">
+            <textarea name="journal" placeholder="Here you can start writing..." autofocus></textarea>
+        </div>
+        <div>
+            <button>save & exit</button>
+        </div>
+    </div>
+</body>
+</html>

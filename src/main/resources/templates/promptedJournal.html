@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>MiZaWra</title>
+    <meta charset="UTF-8">
+
+    <link href="/css/global.css" rel="stylesheet"/>
+    <link href="/css/prompted.css" rel="stylesheet">
+
+    <script src="/js/prompt.js" type="module"></script>
+</head>
+<body>
+<nav th:replace="~{../fragment/navbar :: navbar}"></nav>
+<div class="container">
+    <div class="prompt-header">
+        <h1>what do you want to write about?</h1>
+        <p>Each sub-mode will give you a question to answer in your journal entry. </p>
+    </div>
+    <div class="prompt-container">
+        <div id="word" class="prompt">
+            <h2>one word prompt</h2>
+            <p>This sub-mode will ask you to write a story about a given word. </p>
+        </div>
+        <div id="sentence" class="prompt" >
+            <h2>a few words prompt</h2>
+            <p>This sub-mode will ask you to write a story that includes each word of a given list of words.</p>
+        </div>
+        <div id="paragraph" class="prompt">
+            <h2>paragraph prompt</h2>
+            <p>In this sub-mode you will get a paragraph. It is the beginning of a story, feel free to continue writing on it. </p>
+        </div>
+    </div>
+</div>
+</body>
+</html>

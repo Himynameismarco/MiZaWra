@@ -11,8 +11,12 @@
 <nav th:fragment="navbar" id="navbar" class="navbar">
     <div class="logo">MIZAWRA</div>
     <div class="menu">
-        <a href="/login">Login</a>
-        <a href="/home">Main page</a>
+        <a sec:authorize="!isAuthenticated()" href="/login">login</a>
+        <a sec:authorize="!isAuthenticated()" href="/home">about</a>
+
+        <a sec:authorize="isAuthenticated()" href="/home">home</a>
+        <a sec:authorize="isAuthenticated()" href="/settings">settings</a>
+        <a sec:authorize="isAuthenticated()" href="/login">logout</a>
     </div>
 </nav>
 </body>

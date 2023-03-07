@@ -1,0 +1,83 @@
+.home {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+.home h1 {
+    margin: 0;
+}
+
+.user-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+}
+
+.user-info {
+    display: grid;
+    gap: 5px;
+    width: 550px;
+    align-self: baseline;
+    margin: 20px 0;
+}
+
+.link {
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 30px;
+
+    width: min-content;
+    text-align: center;
+    color: white;
+}
+
+.link .mizawra {
+    font-family: Chivo;
+}
+
+.menu {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 80px;
+    text-align-last: center;
+}
+
+.home .menu a {
+    font-weight: 800;
+    font-size: 24px;
+    line-height: 33px;
+    color: white;
+
+    padding: 30px;
+    box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.4);
+    border-radius: 10px;
+}
+
+.journal {
+    display: grid;
+    grid-template-rows: 30px 1fr 25px;
+
+    background: #232223;
+    padding: 20px;
+    border-radius: 10px;
+    aspect-ratio: 1 / 1;
+
+    text-align: center;
+}
+
+.journal .text {
+    padding-top: 10px;
+    max-width: 230px;
+    background: linear-gradient(180deg, #EBECF1 0%, rgba(235, 236, 241, 0.3) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.journal-header {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 30px;
+}

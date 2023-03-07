@@ -1,0 +1,30 @@
+.container {
+    display: grid;
+    justify-content: center;
+    text-align: center;
+}
+
+.container p {
+    color: #EBECF1;
+    opacity: 0.4;
+}
+
+.prompt-header {
+    margin-bottom: 60px;
+}
+
+.prompt-container {
+    display: grid;
+    gap: 40px;
+}
+
+.prompt {
+    padding: 30px;
+    background: #232223;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.prompt h2 {
+    margin-bottom: 5px;
+}

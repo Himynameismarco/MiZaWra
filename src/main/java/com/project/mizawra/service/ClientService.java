@@ -6,7 +6,9 @@ import com.project.mizawra.models.VerificationToken;
 import com.project.mizawra.models.dto.ClientDto;
 
 public interface ClientService {
+    Client getAuthenticatedClient();
     Client getClient(String email);
+    Client getClientById(String id);
     Client registerClient(ClientDto clientDto) throws Exception;
     Client save(Client client);
     void changeClientPassword(Client client, String newPassword);
