@@ -2,6 +2,7 @@ package com.project.mizawra.controllers.mvc;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class WritingController {
@@ -16,7 +17,7 @@ public class WritingController {
     }
 
     @RequestMapping("/write")
-    public String getWritingPage() {
+    public String getWritingPage(@RequestParam(name = "mode", required = false) String mode) {
         return "writing";
     }
 }
