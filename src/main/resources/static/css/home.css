@@ -34,6 +34,10 @@
     color: white;
 }
 
+.link .mizawra {
+    font-family: Chivo;
+}
+
 .menu {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
