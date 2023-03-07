@@ -51,6 +51,10 @@ body a {
     opacity: 0.4;
 }
 
+.d-none {
+    display: none !important;
+}
+
 input {
     width: -webkit-fill-available;
     padding: 15px;

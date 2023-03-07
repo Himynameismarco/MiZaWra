@@ -4,8 +4,8 @@ body {
 
 .container {
     height: 100%;
-    display: grid;
-    grid-template-rows: auto auto 1fr;
+    display: flex;
+    flex-direction: column;
     position: relative;
     text-align: center;
 
@@ -35,6 +35,7 @@ body {
 }
 
 .textarea-container {
+    flex: 1;
     display: grid;
     grid-template-columns: 1fr;
 }
