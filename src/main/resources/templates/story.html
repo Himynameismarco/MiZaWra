@@ -12,30 +12,26 @@
     <script src="/js/prompt.js" type="module"></script>
 </head>
 <body>
-    <nav th:replace="~{../fragment/navbar :: navbar}"></nav>
-    <div class="container">
-        <div class="prompt-header">
-            <h1>what do you want to write about?</h1>
-            <p>Each sub-mode will give you a question to answer in your journal entry. </p>
+<nav th:replace="~{../fragment/navbar :: navbar}"></nav>
+<div class="container">
+    <div class="prompt-header">
+        <h1 th:text="#{prompted.h1}">what do you want to write about?</h1>
+        <p th:text=""></p>
+    </div>
+    <div class="prompt-container">
+        <div id="word" class="prompt">
+            <h2>one word prompt</h2>
+            <p>This sub-mode will ask you to write a story about a given word. </p>
         </div>
-        <div class="prompt-container">
-            <div id="positive" class="prompt">
-                <h2>positive prompt</h2>
-                <p>Feel like you need something uplifting today? This sub-mode will try to make you think about something positive. </p>
-            </div>
-            <div id="neutral" class="prompt">
-                <h2>neutral prompt</h2>
-                <p>Just in the mood for some reflection on who you are and what you believe? Try this sub-mode!</p>
-            </div>
-            <div id="philosophical" class="prompt">
-                <h2>philosophical prompt</h2>
-                <p>Wanna try to answer the big questions today? Go for this sub-mode!</p>
-            </div>
-            <div id="negative" class="prompt">
-                <h2>negative prompt</h2>
-                <p>Feel like tackling a  difficult personal moment today?</p>
-            </div>
+        <div id="sentence" class="prompt" >
+            <h2>a few words prompt</h2>
+            <p>This sub-mode will ask you to write a story that includes each word of a given list of words.</p>
+        </div>
+        <div id="paragraph" class="prompt">
+            <h2>paragraph prompt</h2>
+            <p>In this sub-mode you will get a paragraph. It is the beginning of a story, feel free to continue writing on it. </p>
         </div>
     </div>
+</div>
 </body>
 </html>
