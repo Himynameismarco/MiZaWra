@@ -15,7 +15,7 @@ public class MessageSourceConfiguration {
                 = new ReloadableResourceBundleMessageSource();
 
         messageSource.setBasename("classpath:messages");
-        messageSource.setDefaultEncoding(String.valueOf(StandardCharsets.ISO_8859_1));
+        messageSource.setDefaultEncoding(StandardCharsets.ISO_8859_1.name());
         return messageSource;
     }
 
