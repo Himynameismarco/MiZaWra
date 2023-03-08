@@ -1,5 +1,6 @@
 package com.project.mizawra.config;
 
+import java.nio.charset.StandardCharsets;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,7 +15,7 @@ public class MessageSourceConfiguration {
                 = new ReloadableResourceBundleMessageSource();
 
         messageSource.setBasename("classpath:messages");
-        messageSource.setDefaultEncoding("UTF-8");
+        messageSource.setDefaultEncoding(StandardCharsets.ISO_8859_1.name());
         return messageSource;
     }
 
