@@ -16,16 +16,16 @@
             <img height="128px" width="128px" src="/images/profile.jpg">
             <div class="user-info">
                 <h2 th:text="${client.getFirstName() + ' ' + client.getLastName()}"></h2>
-                <p th:text="#{home.defaultDescription}" class="color-grey"></p>
+                <p th:text="#{home.defaultDescription}" class="color-grey">We plan to make you have the ability to share your texts with other writers. Therefore, in the future this text will be your bio and you can pick whatever picture you want. For now: Tell yourself why you use MiZaWra (in less than 300 characters).</p>
             </div>
             <span class="link">33 posts</span>
             <a class="link" href="/about">about <div class="mizawra">MIZAWRA</div></a>
         </div>
-        <h1 th:text="#{home.h1}"></h1>
+        <h1 th:text="#{home.h1}">create a new narrative</h1>
         <div class="menu">
-            <a href="/promptedJournal" style="background: #3A6BA4;" th:text="#{home.promptedJournal}"></a>
-            <a href="/write" style="background: #3AA451;" th:text="#{home.freeJournal}"></a>
-            <a href="/story" style="background: #8062FF;" th:text="#{home.story}"></a>
+            <a href="/promptedJournal" style="background: #3A6BA4;" th:text="#{home.promptedJournal}">prompted journal</a>
+            <a href="/write" style="background: #3AA451;" th:text="#{home.freeJournal}">free journal</a>
+            <a href="/story" style="background: #8062FF;" th:text="#{home.story}">story</a>
             <div class="journal">
                 <p class="journal-header">header</p>
                 <p class="text">Jorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio...</p>
