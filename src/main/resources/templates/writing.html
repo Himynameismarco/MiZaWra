@@ -14,14 +14,14 @@
     <div class="container">
         <div class="writing-header">
             <h1 th:text="#{writing.h1}">...time to write...</h1>
-            <div class="time-container">
+            <div th:if="${mode == null}" class="time-container">
                 <h1>14:53</h1>
                 <p class="color-grey" th:text="#{writing.timerSubtext}">click to pause/start</p>
             </div>
         </div>
-        <div class="prompt-container d-none">
-            <p class="color-grey" th:text="#{writing.prompt}">your prompt</p>
-            <h3>What can you hope for?</h3>
+        <div th:if="${prompt != null}" class="prompt-container">
+            <p class="color-grey">your prompt</p>
+            <h3 th:text="${prompt.getPrompt()}">What can you hope for?</h3>
         </div>
         <div class="textarea-container">
             <textarea name="journal" th:placeholder="#{writing.placeholderWritingArea}" autofocus></textarea>
