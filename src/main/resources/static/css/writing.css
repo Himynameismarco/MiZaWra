@@ -17,13 +17,6 @@ body {
     border-radius: 10px;
 }
 
-.writing-header {
-    height: 70px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
 .time-container {
     position: absolute;
     top: 40px;
