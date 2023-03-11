@@ -1,6 +1,7 @@
 package com.project.mizawra.service.impl;
 
 import com.project.mizawra.dao.JournalRepository;
+import com.project.mizawra.models.Client;
 import com.project.mizawra.models.Journal;
 import com.project.mizawra.models.Mode;
 import com.project.mizawra.models.dto.JournalDto;
@@ -27,6 +28,11 @@ public class JournalServiceImpl implements JournalService {
         journal.setOwner(clientService.getAuthenticatedClient());
 
         return journalRepository.save(journal);
+    }
+
+    @Override
+    public long countByOwner(Client owner) {
+        return journalRepository.countByOwner(owner);
     }
 
     private Journal convertDtoToEntity(JournalDto journalDto) {
