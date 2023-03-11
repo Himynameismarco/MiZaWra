@@ -86,4 +86,6 @@ button {
     padding: 35px 65px;
     background: #3AA451;
     border-radius: 10px;
+
+    cursor: pointer;
 }
