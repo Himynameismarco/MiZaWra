@@ -38,6 +38,27 @@ body {
     flex: 1;
     display: grid;
     grid-template-columns: 1fr;
+    grid-template-rows: 70px 1fr;
+}
+
+.textarea-container .title {
+    font-weight: 800;
+    font-size: 36px;
+    line-height: 49px;
+
+    color: #EBECF1;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+
+    background: none;
+    border: none;
+    overflow: auto;
+    outline: none;
+
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
 }
 
 textarea {

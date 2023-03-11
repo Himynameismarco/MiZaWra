@@ -8,6 +8,8 @@
 
     <link href="/css/global.css" rel="stylesheet"/>
     <link href="/css/writing.css" rel="stylesheet">
+
+    <script src="/js/writing.js" type="module"></script>
 </head>
 <body>
     <nav th:replace="~{../fragment/navbar :: navbar}"></nav>
@@ -24,10 +26,11 @@
             <h3 th:text="${prompt.getPrompt()}">What can you hope for?</h3>
         </div>
         <div class="textarea-container">
-            <textarea name="journal" th:placeholder="#{writing.placeholderWritingArea}" autofocus></textarea>
+            <input id="title" class="title" name="title" type="text" th:placeholder="#{writing.placeholderTitle}">
+            <textarea id="journal" name="journal" th:placeholder="#{writing.placeholderWritingArea}" autofocus></textarea>
         </div>
         <div>
-            <button th:text="#{writing.exitButton}">save & exit</button>
+            <button id="save" th:text="#{writing.exitButton}">save & exit</button>
         </div>
     </div>
 </body>
