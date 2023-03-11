@@ -15,11 +15,12 @@ function init() {
     }
 
     document.getElementById('save').addEventListener('click', ()=>{
+        const id = document.querySelector('.container').id;
         const mode = document.getElementById('prompt')?.getAttribute('mode');
         const title = document.getElementById('title').value;
         const journal = document.getElementById('journal').value;
 
-        const dto = {mode: mode, title: title, body: journal};
+        const dto = {id: id, mode: mode, title: title, body: journal};
 
         $.post("/journal/save", dto, function(data) {
             window.location.href = "/home";

@@ -9,7 +9,10 @@ import com.project.mizawra.service.ClientService;
 import com.project.mizawra.service.JournalService;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 @Service
 public class JournalServiceImpl implements JournalService {
@@ -22,16 +25,28 @@ public class JournalServiceImpl implements JournalService {
     }
 
     @Override
+    public Optional<Journal> get(UUID id) {
+        return journalRepository.findById(id);
+    }
+
+    @Override
     public List<Journal> getJournals() {
         return journalRepository.findAll();
     }
 
     @Override
     public Journal save(JournalDto journalDto) {
-        Journal journal = convertDtoToEntity(journalDto);
+        Journal journal;
 
-        journal.setPostedDate(LocalDateTime.now());
-        journal.setOwner(clientService.getAuthenticatedClient());
+        if (StringUtils.hasText(journalDto.getId()) && get(UUID.fromString(journalDto.getId())).isPresent()) {
+            journal = get(UUID.fromString(journalDto.getId())).get();
+            journal.setTitle(journalDto.getTitle());
+            journal.setBody(journalDto.getBody());
+        } else {
+            journal = convertDtoToEntity(journalDto);
+            journal.setPostedDate(LocalDateTime.now());
+            journal.setOwner(clientService.getAuthenticatedClient());
+        }
 
         return journalRepository.save(journal);
     }
@@ -44,9 +59,7 @@ public class JournalServiceImpl implements JournalService {
     private Journal convertDtoToEntity(JournalDto journalDto) {
         Journal journal = new Journal();
 
-        if (journalDto.getMode() != null) {
-            journal.setMode(Mode.valueOf(journalDto.getMode()));
-        }
+        journal.setMode(journalDto.getMode() != null ? Mode.valueOf(journalDto.getMode()) : null);
         journal.setTitle(journalDto.getTitle());
         journal.setBody(journalDto.getBody());
 

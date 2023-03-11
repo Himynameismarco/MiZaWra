@@ -14,8 +14,8 @@
 </head>
 <body>
     <nav th:replace="~{../fragment/navbar :: navbar}"></nav>
-    <div class="container">
-        <div th:if="${mode == null}" class="time-container">
+    <div th:id="${journalId}" class="container">
+        <div th:if="${mode == null && title== null && body == null}" class="time-container">
             <h1>15:00</h1>
             <p class="color-grey" th:text="#{writing.timerSubtext}">click to pause/start</p>
         </div>
@@ -24,8 +24,8 @@
             <h3 id="prompt" th:attr="mode=${prompt.getMode().toString()}" th:text="${prompt.getPrompt()}">What can you hope for?</h3>
         </div>
         <div class="textarea-container">
-            <input id="title" class="title" name="title" type="text" th:placeholder="#{writing.placeholderTitle}">
-            <textarea id="journal" name="journal" th:placeholder="#{writing.placeholderWritingArea}" autofocus></textarea>
+            <input id="title" class="title" name="title" type="text" th:value="${title}" th:placeholder="#{writing.placeholderTitle}">
+            <textarea id="journal" name="journal" th:text="${body}" th:placeholder="#{writing.placeholderWritingArea}" autofocus></textarea>
         </div>
         <div>
             <button id="save" th:text="#{writing.exitButton}">save & exit</button>

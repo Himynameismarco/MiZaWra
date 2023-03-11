@@ -10,6 +10,7 @@ const style = `
         aspect-ratio: 1 / 1;
 
         text-align: center;
+        cursor: pointer;
     }
 
     .journal .text {
@@ -61,5 +62,9 @@ export default class JournalCard extends HTMLElement {
 
         const shadow = this.shadowRoot;
         shadow.append(tmpl.content.cloneNode(true));
+
+        shadow.querySelector('.journal').addEventListener('click', ()=>{
+            window.location.href = "/edit?journalId="+this._object.id;
+        });
     }
 }

@@ -12,8 +12,6 @@ function fetchEvents(page) {
     $.get('/journal/get', function(data) {
         const journalsContainer = document.querySelector('.journal-container');
         data.forEach(journal => {
-            console.log(journal);
-            console.log(new JournalCard(journal))
             journalsContainer.append(new JournalCard(journal));
         });
     });
