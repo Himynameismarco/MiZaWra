@@ -8,6 +8,7 @@ import com.project.mizawra.models.dto.JournalDto;
 import com.project.mizawra.service.ClientService;
 import com.project.mizawra.service.JournalService;
 import java.time.LocalDateTime;
+import java.util.List;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,6 +19,11 @@ public class JournalServiceImpl implements JournalService {
     public JournalServiceImpl(ClientService clientService, JournalRepository journalRepository) {
         this.clientService = clientService;
         this.journalRepository = journalRepository;
+    }
+
+    @Override
+    public List<Journal> getJournals() {
+        return journalRepository.findAll();
     }
 
     @Override
