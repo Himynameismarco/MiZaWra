@@ -19,6 +19,7 @@ const style = `
         background: linear-gradient(180deg, #EBECF1 0%, rgba(235, 236, 241, 0.3) 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
+        overflow: hidden;
     }
 
     .journal-header {
@@ -30,6 +31,7 @@ const style = `
     .color-grey {
         color: #EBECF1;
         opacity: 0.4;
+        padding-top: 5px;
     }
 </style>
 `;
