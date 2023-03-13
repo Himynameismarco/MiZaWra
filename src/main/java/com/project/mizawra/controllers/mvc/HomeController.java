@@ -2,6 +2,7 @@ package com.project.mizawra.controllers.mvc;
 
 import com.project.mizawra.models.Client;
 import com.project.mizawra.service.ClientService;
+import com.project.mizawra.service.JournalService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,9 +13,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/")
 public class HomeController {
     private final ClientService clientService;
+    private final JournalService journalService;
 
-    public HomeController(ClientService clientService) {
+    public HomeController(ClientService clientService, JournalService journalService) {
         this.clientService = clientService;
+        this.journalService = journalService;
     }
 
     @GetMapping("/")
@@ -26,6 +29,7 @@ public class HomeController {
     public String home(Model model) {
         Client client = clientService.getAuthenticatedClient();
         model.addAttribute("client", client);
+        model.addAttribute("countJournals", journalService.countByOwner(client));
         return "home";
     }
 

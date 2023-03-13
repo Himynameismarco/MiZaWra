@@ -17,17 +17,12 @@ body {
     border-radius: 10px;
 }
 
-.writing-header {
-    height: 70px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
 .time-container {
     position: absolute;
     top: 40px;
     right: 40px;
+
+    cursor: pointer;
 }
 
 .prompt-container {
@@ -38,6 +33,27 @@ body {
     flex: 1;
     display: grid;
     grid-template-columns: 1fr;
+    grid-template-rows: 70px 1fr;
+}
+
+.textarea-container .title {
+    font-weight: 800;
+    font-size: 36px;
+    line-height: 49px;
+
+    color: #EBECF1;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+
+    background: none;
+    border: none;
+    overflow: auto;
+    outline: none;
+
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
 }
 
 textarea {
@@ -70,4 +86,6 @@ button {
     padding: 35px 65px;
     background: #3AA451;
     border-radius: 10px;
+
+    cursor: pointer;
 }

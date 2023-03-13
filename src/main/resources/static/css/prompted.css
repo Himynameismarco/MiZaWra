@@ -2,6 +2,7 @@
     display: grid;
     justify-content: center;
     text-align: center;
+    padding-bottom: 40px;
 }
 
 .container p {
