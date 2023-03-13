@@ -9,7 +9,8 @@ import java.util.UUID;
 
 public interface JournalService {
     Optional<Journal> get(UUID id);
-    List<Journal> getJournals();
+    List<Journal> getJournals(int page);
+    Long getPageCount();
     Journal save(JournalDto journalDto);
     long countByOwner(Client owner);
 }

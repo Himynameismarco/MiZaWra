@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -27,8 +28,14 @@ public class JournalsController {
     }
 
     @GetMapping("/get")
-    public List<JournalDto> getJournals() {
-        return journalService.getJournals().stream().map(this::convertJournalToDto).collect(Collectors.toList());
+    public List<JournalDto> getJournals(@RequestParam(name = "page", required = false) Integer page) {
+        int iPage = page != null ? page : 0;
+        return journalService.getJournals(iPage).stream().map(this::convertJournalToDto).collect(Collectors.toList());
+    }
+
+    @GetMapping("/pages")
+    public Long getPages() {
+        return journalService.getPageCount();
     }
 
     private JournalDto convertJournalToDto(Journal journal) {

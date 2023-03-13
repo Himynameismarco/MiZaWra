@@ -11,6 +11,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -30,8 +33,16 @@ public class JournalServiceImpl implements JournalService {
     }
 
     @Override
-    public List<Journal> getJournals() {
-        return journalRepository.findAll();
+    public List<Journal> getJournals(int page) {
+        Client client = clientService.getAuthenticatedClient();
+        Pageable pageable = PageRequest.of(page, 9, Sort.by("postedDate").descending());
+        return journalRepository.findAllByOwner(client, pageable);
+    }
+
+    @Override
+    public Long getPageCount() {
+        Client client = clientService.getAuthenticatedClient();
+        return journalRepository.countByOwner(client) / 9 + 1;
     }
 
     @Override
