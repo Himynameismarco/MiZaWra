@@ -39,3 +39,4 @@ This mode has three sub-modes:
 1. Open pgAdmin (or any other GUI for PostgreSQL)
 2. Launch Query Tool
 3. Run all queries from schema.sql file
+4. Run all queries from data.sql file (it will fulfill tables with needed data)
