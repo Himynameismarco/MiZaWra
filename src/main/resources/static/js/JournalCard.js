@@ -3,6 +3,7 @@ const style = `
     .journal {
         display: grid;
         grid-template-rows: 30px 1fr 25px;
+        max-width: 265px;
 
         background: #232223;
         padding: 20px;
@@ -15,7 +16,6 @@ const style = `
 
     .journal .text {
         padding-top: 10px;
-        max-width: 230px;
         background: linear-gradient(180deg, #EBECF1 0%, rgba(235, 236, 241, 0.3) 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
@@ -23,6 +23,10 @@ const style = `
     }
 
     .journal-header {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+
         font-weight: 700;
         font-size: 20px;
         line-height: 30px;
