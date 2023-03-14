@@ -3,15 +3,18 @@ document.addEventListener("DOMContentLoaded", init);
 let isPaused = false;
 
 function init() {
+    var audio = new Audio('/sound.mp3');
+
     if(document.querySelector('.time-container h1')) {
         const duration = 60*15;
         const timeContainer = document.querySelector('.time-container');
 
         timeContainer.addEventListener('click', ()=> {
             isPaused = !isPaused;
+            audio.pause();
         });
 
-        startTimer(duration, timeContainer.querySelector('h1'));
+        startTimer(duration, timeContainer.querySelector('h1'), audio);
     }
 
     document.getElementById('save').addEventListener('click', ()=>{
@@ -28,9 +31,9 @@ function init() {
     });
 }
 
-function startTimer(duration, display) {
+function startTimer(duration, display, audio) {
     var timer = duration, minutes, seconds;
-    setInterval(function () {
+    var intervalId = setInterval(function () {
         if (!isPaused) {
             minutes = parseInt(timer / 60, 10);
             seconds = parseInt(timer % 60, 10);
@@ -41,7 +44,11 @@ function startTimer(duration, display) {
             display.textContent = minutes + ":" + seconds;
 
             if (--timer < 0) {
-                timer = duration;
+                clearInterval(intervalId);
+                audio.play();
+                setTimeout(() => {
+                    audio.pause();
+                }, 10000);
             }
         }
     }, 1000);
