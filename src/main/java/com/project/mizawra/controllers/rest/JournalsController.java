@@ -39,8 +39,7 @@ public class JournalsController {
     }
 
     private JournalDto convertJournalToDto(Journal journal) {
-        String mode = journal.getMode() != null ? journal.getMode().toString() : null;
         String postedDate = journal.getPostedDate().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
-        return new JournalDto(journal.getId().toString(), mode, journal.getTitle(), journal.getBody(), postedDate);
+        return new JournalDto(journal.getId().toString(), journal.getTitle(), journal.getBody(), postedDate);
     }
 }

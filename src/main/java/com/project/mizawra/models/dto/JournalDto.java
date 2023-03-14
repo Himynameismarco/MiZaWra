@@ -2,7 +2,7 @@ package com.project.mizawra.models.dto;
 
 public class JournalDto {
     private String id;
-    private String mode;
+    private String promptId;
     private String title;
     private String body;
     private String postedDate;
@@ -10,9 +10,16 @@ public class JournalDto {
     public JournalDto() {
     }
 
-    public JournalDto(String id, String mode, String title, String body, String postedDate) {
+    public JournalDto(String id, String title, String body, String postedDate) {
         this.id = id;
-        this.mode = mode;
+        this.title = title;
+        this.body = body;
+        this.postedDate = postedDate;
+    }
+
+    public JournalDto(String id, String promptId, String title, String body, String postedDate) {
+        this.id = id;
+        this.promptId = promptId;
         this.title = title;
         this.body = body;
         this.postedDate = postedDate;
@@ -26,12 +33,12 @@ public class JournalDto {
         this.id = id;
     }
 
-    public String getMode() {
-        return mode;
+    public String getPromptId() {
+        return promptId;
     }
 
-    public void setMode(String mode) {
-        this.mode = mode;
+    public void setPromptId(String promptId) {
+        this.promptId = promptId;
     }
 
     public String getTitle() {

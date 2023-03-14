@@ -19,11 +19,11 @@ function init() {
 
     document.getElementById('save').addEventListener('click', ()=>{
         const id = document.querySelector('.container').id;
-        const mode = document.getElementById('prompt')?.getAttribute('mode');
+        const promptId = document.getElementById('prompt')?.getAttribute('prompt-id');
         const title = document.getElementById('title').value;
         const journal = document.getElementById('journal').value;
 
-        const dto = {id: id, mode: mode, title: title, body: journal};
+        const dto = {id: id, promptId: promptId, title: title, body: journal};
 
         $.post("/journal/save", dto, function(data) {
             window.location.href = "/home";

@@ -3,8 +3,11 @@ package com.project.mizawra.models;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -16,6 +19,8 @@ public class Prompt {
     @Enumerated(EnumType.ORDINAL)
     private Mode mode;
     private String prompt;
+    @OneToMany(mappedBy = "prompt", fetch = FetchType.LAZY)
+    private List<Journal> journals;
 
     public Prompt() {
     }
@@ -47,6 +52,14 @@ public class Prompt {
 
     public void setPrompt(String prompt) {
         this.prompt = prompt;
+    }
+
+    public List<Journal> getJournals() {
+        return journals;
+    }
+
+    public void setJournals(List<Journal> journals) {
+        this.journals = journals;
     }
 
     @Override
