@@ -48,7 +48,7 @@ function startTimer(duration, display, audio) {
                 audio.play();
                 setTimeout(() => {
                     audio.pause();
-                }, 10000);
+                }, 20000);
             }
         }
     }, 1000);
