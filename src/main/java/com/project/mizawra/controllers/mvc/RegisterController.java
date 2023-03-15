@@ -46,6 +46,14 @@ public class RegisterController {
         return "login/register";
     }
 
+    @PostMapping
+    public String registerClient(@Valid ClientDto clientDto, HttpServletRequest request) throws Exception {
+        Client client = clientService.registerClient(clientDto);
+
+        eventMulticaster.multicastEvent(new OnRegistrationCompleteEvent(client, request.getLocale()));
+        return "login/almostDone";
+    }
+
     @GetMapping("/confirm")
     public String registerConfirmation(@RequestParam("token") String token, HttpServletRequest request, Model model) {
         VerificationToken verificationToken = clientService.getVerificationToken(token);
@@ -77,9 +85,6 @@ public class RegisterController {
         return "login/forgetPassword";
     }
 
-    @GetMapping("/almostDone")
-    public String almostDone() { return "login/almostDone"; }
-
     @GetMapping("/changePassword")
     public String changePassword(@RequestParam("token") String token, HttpServletRequest request, Model model) {
         VerificationToken verificationToken = clientService.getVerificationToken(token);
@@ -92,14 +97,5 @@ public class RegisterController {
 
         model.addAttribute("token", verificationToken);
         return "login/changePassword";
-    }
-
-    @PostMapping("/register")
-    public void registerClient(@Valid ClientDto clientDto, HttpServletRequest request, HttpServletResponse response ) throws Exception {
-        Client client = clientService.registerClient(clientDto);
-
-        eventMulticaster.multicastEvent(new OnRegistrationCompleteEvent(client, request.getLocale()));
-        response.sendRedirect("register/almostDone");
-        return;
     }
 }
