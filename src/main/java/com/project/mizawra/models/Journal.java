@@ -21,18 +21,19 @@ public class Journal {
     @JoinColumn(name = "owner_id", nullable = false)
     private Client owner;
     private LocalDateTime postedDate;
-    @Enumerated(EnumType.ORDINAL)
-    private Mode mode;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "prompt_id")
+    private Prompt prompt;
     private String title;
     private String body;
 
     public Journal() {
     }
 
-    public Journal(Client owner, LocalDateTime postedDate, Mode mode, String title, String body) {
+    public Journal(Client owner, LocalDateTime postedDate, Prompt prompt, String title, String body) {
         this.owner = owner;
         this.postedDate = postedDate;
-        this.mode = mode;
+        this.prompt = prompt;
         this.title = title;
         this.body = body;
     }
@@ -61,12 +62,12 @@ public class Journal {
         this.postedDate = postedDate;
     }
 
-    public Mode getMode() {
-        return mode;
+    public Prompt getPrompt() {
+        return prompt;
     }
 
-    public void setMode(Mode mode) {
-        this.mode = mode;
+    public void setPrompt(Prompt prompt) {
+        this.prompt = prompt;
     }
 
     public String getTitle() {
@@ -95,17 +96,18 @@ public class Journal {
         }
         Journal journal = (Journal) o;
         return id.equals(journal.id) && owner.equals(journal.owner) && Objects.equals(postedDate, journal.postedDate)
-                && mode == journal.mode && Objects.equals(title, journal.title) && Objects.equals(body, journal.body);
+                && Objects.equals(prompt, journal.prompt) && Objects.equals(title, journal.title) && Objects.equals(
+                body, journal.body);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, owner, postedDate, mode, title, body);
+        return Objects.hash(id, owner, postedDate, prompt, title, body);
     }
 
     @Override
     public String toString() {
-        return "Journal{" + "id=" + id + ", owner=" + owner + ", postedDate=" + postedDate + ", mode=" + mode
+        return "Journal{" + "id=" + id + ", owner=" + owner + ", postedDate=" + postedDate + ", prompt=" + prompt
                 + ", title='" + title + '\'' + ", body='" + body + '\'' + '}';
     }
 }

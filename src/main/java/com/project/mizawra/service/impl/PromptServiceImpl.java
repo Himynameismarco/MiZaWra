@@ -6,6 +6,7 @@ import com.project.mizawra.models.Prompt;
 import com.project.mizawra.service.PromptService;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,6 +15,11 @@ public class PromptServiceImpl implements PromptService {
 
     public PromptServiceImpl(PromptRepository promptRepository) {
         this.promptRepository = promptRepository;
+    }
+
+    @Override
+    public Prompt get(UUID id) {
+        return promptRepository.findById(id).orElse(null);
     }
 
     @Override

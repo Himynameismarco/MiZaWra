@@ -45,6 +45,7 @@ public class WritingController {
         if (optionalJournal.isPresent()) {
             Journal journal = optionalJournal.get();
             model.addAttribute("journalId", journalId);
+            model.addAttribute("prompt", journal.getPrompt());
             model.addAttribute("title", journal.getTitle());
             model.addAttribute("body", journal.getBody());
         }

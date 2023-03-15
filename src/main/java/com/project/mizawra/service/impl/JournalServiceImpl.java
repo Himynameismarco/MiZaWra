@@ -3,10 +3,10 @@ package com.project.mizawra.service.impl;
 import com.project.mizawra.dao.JournalRepository;
 import com.project.mizawra.models.Client;
 import com.project.mizawra.models.Journal;
-import com.project.mizawra.models.Mode;
 import com.project.mizawra.models.dto.JournalDto;
 import com.project.mizawra.service.ClientService;
 import com.project.mizawra.service.JournalService;
+import com.project.mizawra.service.PromptService;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -20,10 +20,13 @@ import org.springframework.util.StringUtils;
 @Service
 public class JournalServiceImpl implements JournalService {
     private final ClientService clientService;
+    private final PromptService promptService;
     private final JournalRepository journalRepository;
 
-    public JournalServiceImpl(ClientService clientService, JournalRepository journalRepository) {
+    public JournalServiceImpl(ClientService clientService, PromptService promptService,
+                              JournalRepository journalRepository) {
         this.clientService = clientService;
+        this.promptService = promptService;
         this.journalRepository = journalRepository;
     }
 
@@ -70,7 +73,9 @@ public class JournalServiceImpl implements JournalService {
     private Journal convertDtoToEntity(JournalDto journalDto) {
         Journal journal = new Journal();
 
-        journal.setMode(journalDto.getMode() != null ? Mode.valueOf(journalDto.getMode()) : null);
+        if (StringUtils.hasText(journalDto.getPromptId())) {
+            journal.setPrompt(promptService.get(UUID.fromString(journalDto.getPromptId())));
+        }
         journal.setTitle(journalDto.getTitle());
         journal.setBody(journalDto.getBody());
 

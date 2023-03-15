@@ -21,7 +21,7 @@
         </div>
         <div th:if="${prompt != null}" class="prompt-container">
             <p class="color-grey">your prompt</p>
-            <h3 id="prompt" th:attr="mode=${prompt.getMode().toString()}" th:text="${prompt.getPrompt()}">What can you hope for?</h3>
+            <h3 id="prompt" th:attr="prompt-id=${prompt.getId()}" th:text="${prompt.getPrompt()}">What can you hope for?</h3>
         </div>
         <div class="textarea-container">
             <input id="title" class="title" name="title" type="text" th:value="${title}" th:placeholder="#{writing.placeholderTitle}">
