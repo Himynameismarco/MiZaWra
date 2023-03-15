@@ -68,6 +68,9 @@ public class RegisterController {
         return "login/forgetPassword";
     }
 
+    @GetMapping("/almostDone")
+    public String almostDone() { return "login/almostDone"; }
+
     @GetMapping("/changePassword")
     public String changePassword(@RequestParam("token") String token, HttpServletRequest request, Model model) {
         VerificationToken verificationToken = clientService.getVerificationToken(token);
