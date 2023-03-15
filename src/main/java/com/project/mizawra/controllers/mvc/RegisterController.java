@@ -1,17 +1,23 @@
 package com.project.mizawra.controllers.mvc;
 
 import com.project.mizawra.common.EmailTemplateFactory;
+import com.project.mizawra.common.event.OnRegistrationCompleteEvent;
 import com.project.mizawra.models.Client;
 import com.project.mizawra.models.VerificationToken;
 import com.project.mizawra.models.dto.ClientDto;
 import com.project.mizawra.service.ClientService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
+import java.io.IOException;
 import java.util.Locale;
 import org.springframework.context.MessageSource;
+import org.springframework.context.event.ApplicationEventMulticaster;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -22,13 +28,16 @@ public class RegisterController {
     private final MessageSource messages;
     private final EmailTemplateFactory emailTemplateFactory;
     private final JavaMailSender mailSender;
+    private final ApplicationEventMulticaster eventMulticaster;
+
 
     public RegisterController(ClientService clientService, MessageSource messages,
-                              EmailTemplateFactory emailTemplateFactory, JavaMailSender mailSender) {
+                              EmailTemplateFactory emailTemplateFactory, JavaMailSender mailSender, ApplicationEventMulticaster eventMulticaster) {
         this.clientService = clientService;
         this.messages = messages;
         this.emailTemplateFactory = emailTemplateFactory;
         this.mailSender = mailSender;
+        this.eventMulticaster = eventMulticaster;
     }
 
     @GetMapping
@@ -83,5 +92,14 @@ public class RegisterController {
 
         model.addAttribute("token", verificationToken);
         return "login/changePassword";
+    }
+
+    @PostMapping("/register")
+    public void registerClient(@Valid ClientDto clientDto, HttpServletRequest request, HttpServletResponse response ) throws Exception {
+        Client client = clientService.registerClient(clientDto);
+
+        eventMulticaster.multicastEvent(new OnRegistrationCompleteEvent(client, request.getLocale()));
+        response.sendRedirect("register/almostDone");
+        return;
     }
 }

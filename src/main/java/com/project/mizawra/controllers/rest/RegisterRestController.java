@@ -25,15 +25,6 @@ public class RegisterRestController {
         this.clientService = clientService;
     }
 
-    @PostMapping("/register")
-    public String registerClient(@Valid ClientDto clientDto, HttpServletRequest request, HttpServletResponse response) throws Exception{
-        Client client = clientService.registerClient(clientDto);
-
-        eventMulticaster.multicastEvent(new OnRegistrationCompleteEvent(client, request.getLocale()));
-        response.sendRedirect("/register/almostDone");
-        return "success";
-    }
-
     @PostMapping("/forgetPassword")
     public String forgetPassword(@RequestParam("email") String email, HttpServletRequest request) throws Exception{
         Client client = clientService.getClient(email);
