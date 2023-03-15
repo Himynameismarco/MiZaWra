@@ -8,6 +8,7 @@ import com.project.mizawra.models.dto.ClientDto;
 import com.project.mizawra.models.dto.SavePasswordDto;
 import com.project.mizawra.service.ClientService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.context.event.ApplicationEventMulticaster;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,10 +26,11 @@ public class RegisterRestController {
     }
 
     @PostMapping("/register")
-    public String registerClient(@Valid ClientDto clientDto, HttpServletRequest request) throws Exception{
+    public String registerClient(@Valid ClientDto clientDto, HttpServletRequest request, HttpServletResponse response) throws Exception{
         Client client = clientService.registerClient(clientDto);
 
         eventMulticaster.multicastEvent(new OnRegistrationCompleteEvent(client, request.getLocale()));
+        response.sendRedirect("/register/almostDone");
         return "success";
     }
 
