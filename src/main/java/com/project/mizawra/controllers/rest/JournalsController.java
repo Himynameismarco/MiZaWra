@@ -22,9 +22,9 @@ public class JournalsController {
     }
 
     @PostMapping("/save")
-    public String saveJournal(JournalDto journalDto) {
+    public JournalDto saveJournal(JournalDto journalDto) {
         journalService.save(journalDto);
-        return "success";
+        return convertJournalToDto(journalService.save(journalDto));
     }
 
     @GetMapping("/get")
