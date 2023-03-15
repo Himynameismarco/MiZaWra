@@ -1,3 +1,7 @@
+body {
+  overflow: hidden;
+}
+
 h1 {
   margin: 15px 0;
 }
