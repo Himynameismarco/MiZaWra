@@ -34,12 +34,3 @@
 h1 {
     margin: 15px 0;
 }
-
-.container {
-    padding: 42px 168px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 80%;
-    text-align: center;
-}
