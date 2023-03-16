@@ -1,11 +1,44 @@
 document.addEventListener("DOMContentLoaded", init);
 
 let isPaused = false;
+let journalLength = 0;
 
 function init() {
-    var audio = new Audio('/sound.mp3');
+    _addTimer();
 
+    let saveInterval = setInterval(function(){
+        const updatedJournal = document.getElementById('journal').value;
+        if(updatedJournal.length !== journalLength) {
+            _saveJournal();
+            journalLength = updatedJournal.length;
+        }
+    }, 30000);
+
+    document.getElementById('save').addEventListener('click', ()=>{
+        _saveJournal();
+        window.location.href = "/home";
+    });
+}
+
+function _saveJournal() {
+    const idContainer = document.querySelector('.container');
+    const promptId = document.getElementById('prompt')?.getAttribute('prompt-id');
+    const title = document.getElementById('title').value;
+    const journal = document.getElementById('journal').value;
+
+    const dto = {id: idContainer.id, promptId: promptId, title: title, body: journal};
+
+    $.post("/journal/save", dto, function(data) {
+        if (idContainer.id === '') {
+            idContainer.id = data.id;
+        }
+    });
+}
+
+function _addTimer() {
     if(document.querySelector('.time-container h1')) {
+        var audio = new Audio('/sound.mp3');
+
         const duration = 60*15;
         const timeContainer = document.querySelector('.time-container');
 
@@ -14,24 +47,11 @@ function init() {
             audio.pause();
         });
 
-        startTimer(duration, timeContainer.querySelector('h1'), audio);
+        _startTimer(duration, timeContainer.querySelector('h1'), audio);
     }
-
-    document.getElementById('save').addEventListener('click', ()=>{
-        const id = document.querySelector('.container').id;
-        const promptId = document.getElementById('prompt')?.getAttribute('prompt-id');
-        const title = document.getElementById('title').value;
-        const journal = document.getElementById('journal').value;
-
-        const dto = {id: id, promptId: promptId, title: title, body: journal};
-
-        $.post("/journal/save", dto, function(data) {
-            window.location.href = "/home";
-        });
-    });
 }
 
-function startTimer(duration, display, audio) {
+function _startTimer(duration, display, audio) {
     var timer = duration, minutes, seconds;
     var intervalId = setInterval(function () {
         if (!isPaused) {
