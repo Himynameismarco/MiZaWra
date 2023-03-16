@@ -5,6 +5,7 @@ import com.project.mizawra.service.JournalService;
 import com.project.mizawra.service.PromptService;
 import java.util.Optional;
 import java.util.UUID;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,7 +35,8 @@ public class WritingController {
     public String getWritingPage(@RequestParam(name = "mode", required = false) String mode, Model model) {
         if (mode != null) {
             model.addAttribute("mode", mode);
-            model.addAttribute("prompt", promptService.getRandomByMode(mode));
+            model.addAttribute("prompt",
+                    promptService.getRandomByModeAndLocale(mode, LocaleContextHolder.getLocale()));
         }
         return "writing";
     }
