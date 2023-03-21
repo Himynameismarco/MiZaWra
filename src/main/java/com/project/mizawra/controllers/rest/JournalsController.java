@@ -23,7 +23,6 @@ public class JournalsController {
 
     @PostMapping("/save")
     public JournalDto saveJournal(JournalDto journalDto) throws Exception {
-        journalService.save(journalDto);
         return convertJournalToDto(journalService.save(journalDto));
     }
 
