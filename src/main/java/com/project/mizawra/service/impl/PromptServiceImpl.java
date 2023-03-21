@@ -5,6 +5,7 @@ import com.project.mizawra.models.Mode;
 import com.project.mizawra.models.Prompt;
 import com.project.mizawra.service.PromptService;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 import java.util.UUID;
 import org.springframework.stereotype.Service;
@@ -23,8 +24,8 @@ public class PromptServiceImpl implements PromptService {
     }
 
     @Override
-    public Prompt getRandomByMode(String mode) {
-        List<Prompt> promptList = promptRepository.findByMode(Mode.valueOf(mode));
+    public Prompt getRandomByModeAndLocale(String mode, Locale locale) {
+        List<Prompt> promptList = promptRepository.findByModeAndLocale(Mode.valueOf(mode), locale.getLanguage());
         if (!promptList.isEmpty()) {
             return promptList.get(new Random().nextInt(promptList.size()));
         }

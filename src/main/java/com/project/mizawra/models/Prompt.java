@@ -21,6 +21,7 @@ public class Prompt {
     private String prompt;
     @OneToMany(mappedBy = "prompt", fetch = FetchType.LAZY)
     private List<Journal> journals;
+    private String locale;
 
     public Prompt() {
     }
@@ -62,6 +63,14 @@ public class Prompt {
         this.journals = journals;
     }
 
+    public String getLocale() {
+        return locale;
+    }
+
+    public void setLocale(String locale) {
+        this.locale = locale;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -71,16 +80,18 @@ public class Prompt {
             return false;
         }
         Prompt prompt1 = (Prompt) o;
-        return id.equals(prompt1.id) && mode == prompt1.mode && Objects.equals(prompt, prompt1.prompt);
+        return id.equals(prompt1.id) && mode == prompt1.mode && Objects.equals(prompt, prompt1.prompt)
+                && Objects.equals(locale, prompt1.locale);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, mode, prompt);
+        return Objects.hash(id, mode, prompt, locale);
     }
 
     @Override
     public String toString() {
-        return "Prompt{" + "id=" + id + ", mode=" + mode + ", prompt='" + prompt + '\'' + '}';
+        return "Prompt{" + "id=" + id + ", mode=" + mode + ", prompt='" + prompt + '\'' + ", locale='" + locale + '\''
+                + '}';
     }
 }

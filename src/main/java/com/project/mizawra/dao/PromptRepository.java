@@ -7,5 +7,5 @@ import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface PromptRepository extends JpaRepository<Prompt, UUID> {
-    List<Prompt> findByMode(Mode mode);
+    List<Prompt> findByModeAndLocale(Mode mode, String locale);
 }

@@ -3,6 +3,7 @@ package com.project.mizawra.controllers.mvc;
 import com.project.mizawra.models.Client;
 import com.project.mizawra.service.ClientService;
 import com.project.mizawra.service.JournalService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,6 +36,7 @@ public class HomeController {
 
     @GetMapping("/login")
     public String login(@RequestParam(name = "message", required = false) String message, Model model) {
+        SecurityContextHolder.clearContext();
         if (message != null) {
             model.addAttribute("message", message);
         }
