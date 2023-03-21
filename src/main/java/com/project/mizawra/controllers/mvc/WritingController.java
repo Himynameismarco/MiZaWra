@@ -3,8 +3,13 @@ package com.project.mizawra.controllers.mvc;
 import com.project.mizawra.models.Journal;
 import com.project.mizawra.service.JournalService;
 import com.project.mizawra.service.PromptService;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Optional;
 import java.util.UUID;
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,7 +47,7 @@ public class WritingController {
     }
 
     @RequestMapping("/edit")
-    public String editJournal(@RequestParam(name = "journalId") UUID journalId, Model model) {
+    public String editJournal(@RequestParam(name = "journalId") UUID journalId, Model model) throws Exception {
         Optional<Journal> optionalJournal = journalService.get(journalId);
         if (optionalJournal.isPresent()) {
             Journal journal = optionalJournal.get();

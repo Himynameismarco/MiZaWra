@@ -3,14 +3,19 @@ package com.project.mizawra.service;
 import com.project.mizawra.models.Client;
 import com.project.mizawra.models.Journal;
 import com.project.mizawra.models.dto.JournalDto;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 
 public interface JournalService {
     Optional<Journal> get(UUID id);
     List<Journal> getJournals(int page);
     Long getPageCount();
-    Journal save(JournalDto journalDto);
+    Journal save(JournalDto journalDto) throws Exception;
     long countByOwner(Client owner);
 }

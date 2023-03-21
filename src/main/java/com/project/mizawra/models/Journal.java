@@ -1,5 +1,6 @@
 package com.project.mizawra.models;
 
+import com.project.mizawra.common.CipherUtil;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -8,9 +9,16 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import java.nio.charset.StandardCharsets;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 
 @Entity
 public class Journal {
@@ -78,12 +86,16 @@ public class Journal {
         this.title = title;
     }
 
-    public String getBody() {
-        return body;
+    public String getBody()
+            throws NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException,
+            InvalidKeyException {
+        return CipherUtil.decryptString(body);
     }
 
-    public void setBody(String body) {
-        this.body = body;
+    public void setBody(String body)
+            throws NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException,
+            InvalidKeyException {
+        this.body = CipherUtil.encryptString(body);
     }
 
     @Override
