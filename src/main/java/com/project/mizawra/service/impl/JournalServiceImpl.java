@@ -49,7 +49,7 @@ public class JournalServiceImpl implements JournalService {
     }
 
     @Override
-    public Journal save(JournalDto journalDto) {
+    public Journal save(JournalDto journalDto) throws Exception {
         Journal journal;
 
         if (StringUtils.hasText(journalDto.getId()) && get(UUID.fromString(journalDto.getId())).isPresent()) {
@@ -70,7 +70,7 @@ public class JournalServiceImpl implements JournalService {
         return journalRepository.countByOwner(owner);
     }
 
-    private Journal convertDtoToEntity(JournalDto journalDto) {
+    private Journal convertDtoToEntity(JournalDto journalDto) throws Exception{
         Journal journal = new Journal();
 
         if (StringUtils.hasText(journalDto.getPromptId())) {

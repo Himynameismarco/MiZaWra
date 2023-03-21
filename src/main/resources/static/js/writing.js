@@ -15,6 +15,7 @@ function init() {
     }, 30000);
 
     document.getElementById('save').addEventListener('click', ()=>{
+        clearInterval(saveInterval);
         _saveJournal();
         window.location.href = "/home";
     });

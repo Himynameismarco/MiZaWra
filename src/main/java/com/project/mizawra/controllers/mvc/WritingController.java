@@ -42,7 +42,7 @@ public class WritingController {
     }
 
     @RequestMapping("/edit")
-    public String editJournal(@RequestParam(name = "journalId") UUID journalId, Model model) {
+    public String editJournal(@RequestParam(name = "journalId") UUID journalId, Model model) throws Exception {
         Optional<Journal> optionalJournal = journalService.get(journalId);
         if (optionalJournal.isPresent()) {
             Journal journal = optionalJournal.get();
