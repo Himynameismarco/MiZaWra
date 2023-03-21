@@ -34,6 +34,7 @@ This mode has three sub-modes:
 - DOMAIN = domain of our website (locally it's http://localhost:8080)
 - EMAIL_LOGIN = login to our email 
 - EMAIL_PSSWD = password to email
+- CRYPTO_KEY = key for encrypting journals
 
 ### Setup database
 1. Open pgAdmin (or any other GUI for PostgreSQL)
