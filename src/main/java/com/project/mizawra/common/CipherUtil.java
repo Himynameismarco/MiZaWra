@@ -1,8 +1,8 @@
 package com.project.mizawra.common;
 
-import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
@@ -22,14 +22,12 @@ public class CipherUtil {
     public static String encryptString(String text)
             throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, IllegalBlockSizeException,
             BadPaddingException {
-        return new String(CipherUtil.getCipher(Cipher.ENCRYPT_MODE).doFinal(text.getBytes(
-                StandardCharsets.ISO_8859_1)), StandardCharsets.ISO_8859_1);
+        return Base64.getEncoder().encodeToString(CipherUtil.getCipher(Cipher.ENCRYPT_MODE).doFinal(text.getBytes()));
     }
 
     public static String decryptString(String text)
             throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, IllegalBlockSizeException,
             BadPaddingException {
-        return new String(CipherUtil.getCipher(Cipher.DECRYPT_MODE).doFinal(text.getBytes(
-                StandardCharsets.ISO_8859_1)), StandardCharsets.ISO_8859_1);
+        return new String(CipherUtil.getCipher(Cipher.DECRYPT_MODE).doFinal(Base64.getDecoder().decode(text)));
     }
 }
