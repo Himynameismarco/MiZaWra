@@ -42,4 +42,9 @@ public class HomeController {
         }
         return "login/login";
     }
+
+    @GetMapping("/fail")
+    public String fail() {
+        return "fail";
+    }
 }

@@ -22,5 +22,7 @@ function _savePassword(event) {
     console.log(token)
     $.post("/savePassword", {password : password, tokenId: token}, function(data) {
         window.location.href = "/login?message=" + data.message;
-   })
+   }).fail(function() {
+        window.location.href = "/fail";
+   });
 }

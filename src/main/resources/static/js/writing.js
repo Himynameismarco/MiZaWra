@@ -32,6 +32,8 @@ function _saveJournal() {
         if (idContainer.id === '') {
             idContainer.id = data.id;
         }
+    }).fail(function() {
+        window.location.href = "/fail";
     });
 }
 
