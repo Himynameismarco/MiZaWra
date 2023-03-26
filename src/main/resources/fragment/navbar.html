@@ -9,7 +9,7 @@
 </head>
 <body>
 <nav th:fragment="navbar" id="navbar" class="navbar">
-    <div class="logo">MIZAWRA</div>
+    <a href="/home" class="logo">MIZAWRA</a>
     <div class="menu">
         <a sec:authorize="!isAuthenticated()" href="/login">login</a>
         <a sec:authorize="!isAuthenticated()" href="/home">about</a>
