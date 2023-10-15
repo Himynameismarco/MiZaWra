@@ -42,10 +42,9 @@ public class SecurityConfiguration {
                 response.sendError(HttpServletResponse.SC_UNAUTHORIZED, ex.getMessage())).and();
 
         http.authorizeHttpRequests()
-                .requestMatchers("/login*", "/register/**", "/forgetPassword", "/savePassword", "/js/**", "/css/**",
+                .requestMatchers("/login", "/register/**", "/forgetPassword", "/savePassword", "/js/**", "/css/**",
                         "/images/**", "/fragment/**").permitAll()
-                .anyRequest().authenticated().and()
-                .formLogin().loginProcessingUrl("/login").defaultSuccessUrl("/home", true);
+                .anyRequest().authenticated().and();
 
         http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();

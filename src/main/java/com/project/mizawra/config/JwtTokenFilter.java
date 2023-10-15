@@ -1,7 +1,7 @@
 package com.project.mizawra.config;
 
+import com.project.mizawra.dao.ClientRepository;
 import com.project.mizawra.models.Client;
-import com.project.mizawra.service.ClientService;
 import com.project.mizawra.service.JwtTokenService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -16,24 +16,23 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 @Component
 public class JwtTokenFilter extends OncePerRequestFilter {
     private final JwtTokenService jwtTokenService;
-    private final ClientService clientService;
+    private final ClientRepository clientRepository;
 
-    public JwtTokenFilter(JwtTokenService jwtTokenService, ClientService clientService) {
+    public JwtTokenFilter(JwtTokenService jwtTokenService, ClientRepository clientRepository) {
         this.jwtTokenService = jwtTokenService;
-        this.clientService = clientService;
+        this.clientRepository = clientRepository;
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         final String header = request.getHeader(HttpHeaders.AUTHORIZATION);
-        if (StringUtils.hasText(header) || !header.startsWith("Bearer ")) {
+        if (header == null || !header.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
         }
@@ -44,12 +43,15 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             return;
         }
 
-        Client client = clientService.getClient(jwtTokenService.extractUsername(token));
-        UserDetails userDetails = new User(client.getEmail(), client.getPassword(), List.of());
+        Client client = clientRepository.findByEmail(jwtTokenService.extractUsername(token)).orElse(null);
+        UserDetails userDetails = null;
+        if (client != null) {
+            userDetails = new User(client.getEmail(), client.getPassword(), List.of());
+        }
 
         UsernamePasswordAuthenticationToken
                 authentication = new UsernamePasswordAuthenticationToken(
-                userDetails, null, userDetails.getAuthorities()
+                userDetails, null, userDetails == null ? List.of() : userDetails.getAuthorities()
         );
 
         authentication.setDetails(
