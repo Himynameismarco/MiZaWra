@@ -54,6 +54,6 @@ public class JwtTokenServiceImpl implements JwtTokenService {
     }
 
     private Claims extractAllClaims(String token) {
-        return (Claims) Jwts.parser().decryptWith((SecretKey) getSigningKey()).build().parse(token).getPayload();
+        return (Claims) Jwts.parser().verifyWith((SecretKey) getSigningKey()).build().parse(token).getPayload();
     }
 }
