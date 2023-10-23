@@ -42,8 +42,7 @@ public class SecurityConfiguration {
                 response.sendError(HttpServletResponse.SC_UNAUTHORIZED, ex.getMessage())).and();
 
         http.authorizeHttpRequests()
-                .requestMatchers("/login", "/register/**", "/forgetPassword", "/savePassword", "/js/**", "/css/**",
-                        "/images/**", "/fragment/**").permitAll()
+                .requestMatchers("/login", "/forgetPassword", "/savePassword").permitAll()
                 .anyRequest().authenticated().and();
 
         http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);

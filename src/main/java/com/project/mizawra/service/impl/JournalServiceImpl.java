@@ -66,8 +66,8 @@ public class JournalServiceImpl implements JournalService {
     }
 
     @Override
-    public long countByOwner(Client owner) {
-        return journalRepository.countByOwner(owner);
+    public Long countJournalsForAuthenticatedUser() {
+        return journalRepository.countByOwner(clientService.getAuthenticatedClient());
     }
 
     private Journal convertDtoToEntity(JournalDto journalDto) throws Exception{
