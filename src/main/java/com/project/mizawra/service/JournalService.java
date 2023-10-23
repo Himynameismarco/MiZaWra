@@ -11,6 +11,6 @@ public interface JournalService {
     Optional<Journal> get(UUID id);
     List<Journal> getJournals(int page);
     Long getPageCount();
-    Journal save(JournalDto journalDto);
+    Journal save(JournalDto journalDto) throws Exception;
     long countByOwner(Client owner);
 }
