@@ -1,11 +1,15 @@
 package com.project.mizawra.rest;
 
 import com.project.mizawra.models.Journal;
+import com.project.mizawra.models.Prompt;
 import com.project.mizawra.models.dto.JournalDto;
+import com.project.mizawra.models.dto.PromptDto;
 import com.project.mizawra.service.JournalService;
+import com.project.mizawra.service.PromptService;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,9 +21,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/journal")
 public class JournalsController {
     private final JournalService journalService;
+    private final PromptService promptService;
 
-    public JournalsController(JournalService journalService) {
+    public JournalsController(JournalService journalService, PromptService promptService) {
         this.journalService = journalService;
+        this.promptService = promptService;
+    }
+
+    @GetMapping("/prompt")
+    public PromptDto getRandomPromptByMode(@RequestParam String mode) {
+        return convertPromptToDto(promptService.getRandomByModeAndLocale(mode, Locale.ENGLISH));
     }
 
     @PostMapping("/save")
@@ -50,5 +61,9 @@ public class JournalsController {
     private JournalDto convertJournalToDto(Journal journal) throws Exception {
         String postedDate = journal.getPostedDate().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
         return new JournalDto(journal.getId().toString(), journal.getTitle(), journal.getBody(), postedDate);
+    }
+
+    private PromptDto convertPromptToDto(Prompt prompt) {
+        return new PromptDto(prompt.getId().toString(), prompt.getPrompt());
     }
 }
