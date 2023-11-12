@@ -20,7 +20,7 @@ public class PromptServiceImpl implements PromptService {
 
     @Override
     public Prompt get(UUID id) {
-        return promptRepository.findById(id).orElse(null);
+        return promptRepository.findById(id).orElse(new Prompt());
     }
 
     @Override
