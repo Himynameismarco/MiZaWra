@@ -66,6 +66,11 @@ public class JournalServiceImpl implements JournalService {
     }
 
     @Override
+    public void delete(UUID id) {
+        journalRepository.deleteById(id);
+    }
+
+    @Override
     public Long countJournalsForAuthenticatedUser() {
         return journalRepository.countByOwner(clientService.getAuthenticatedClient());
     }

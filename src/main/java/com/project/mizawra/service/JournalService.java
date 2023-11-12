@@ -11,5 +11,6 @@ public interface JournalService {
     List<Journal> getJournals(int page);
     Long getPageCount();
     Journal save(JournalDto journalDto) throws Exception;
+    void delete(UUID id);
     Long countJournalsForAuthenticatedUser();
 }
