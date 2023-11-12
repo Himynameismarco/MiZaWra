@@ -10,6 +10,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,6 +34,10 @@ public class JournalsController {
         return convertPromptToDto(promptService.getRandomByModeAndLocale(mode, Locale.ENGLISH));
     }
 
+    @GetMapping
+    public JournalDto editJournal(@RequestParam(name = "journalId") UUID journalId) throws Exception {
+        return convertJournalToDto(journalService.get(journalId).orElse(new Journal()));
+    }
     @PostMapping("/save")
     public JournalDto saveJournal(@RequestBody JournalDto journalDto) throws Exception {
         return convertJournalToDto(journalService.save(journalDto));
