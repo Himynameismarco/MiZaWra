@@ -22,14 +22,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class RegisterRestController {
+public class LoginController {
     private final ApplicationEventMulticaster eventMulticaster;
     private final ClientService clientService;
     private final DaoAuthenticationProvider authenticationProvider;
     private final JwtTokenService jwtTokenService;
 
-    public RegisterRestController(ApplicationEventMulticaster eventMulticaster, ClientService clientService,
-                                  DaoAuthenticationProvider authenticationProvider, JwtTokenService jwtTokenService) {
+    public LoginController(ApplicationEventMulticaster eventMulticaster, ClientService clientService,
+                           DaoAuthenticationProvider authenticationProvider, JwtTokenService jwtTokenService) {
         this.eventMulticaster = eventMulticaster;
         this.clientService = clientService;
         this.authenticationProvider = authenticationProvider;
@@ -38,6 +38,11 @@ public class RegisterRestController {
 
     @PostMapping("/login")
     public ResponseEntity<Object> login(@RequestBody @Valid AuthRequest request) {
+        Client client = clientService.getClient(request.getUsername());
+        if (client == null || !client.getActive()) {
+            return ResponseEntity.badRequest().build();
+        }
+
         try {
             authenticationProvider.authenticate(
                     new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
@@ -50,10 +55,11 @@ public class RegisterRestController {
     }
 
     @PostMapping("/forgetPassword")
-    public ResponseEntity<Object> forgetPassword(@RequestParam("email") String email, HttpServletRequest request) throws BadCredentialsException {
+    public ResponseEntity<Object> forgetPassword(@RequestParam("email") String email, HttpServletRequest request) throws
+            BadCredentialsException {
         Client client = clientService.getClient(email);
         if (client == null) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.notFound().build();
         }
 
         eventMulticaster.multicastEvent(new OnForgetPasswordEvent(client, request.getLocale()));

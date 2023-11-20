@@ -9,7 +9,7 @@ public interface ClientService {
     Client getAuthenticatedClient();
     Client getClient(String email);
     Client getClientById(String id);
-    Client registerClient(ClientDto clientDto) throws Exception;
+    Client registerClient(ClientDto clientDto);
     Client save(Client client);
     void changeClientPassword(Client client, String newPassword);
 

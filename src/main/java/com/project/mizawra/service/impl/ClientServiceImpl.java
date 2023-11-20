@@ -7,8 +7,10 @@ import com.project.mizawra.models.TokenType;
 import com.project.mizawra.models.VerificationToken;
 import com.project.mizawra.models.dto.ClientDto;
 import com.project.mizawra.service.ClientService;
+import jakarta.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.UUID;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -47,10 +49,9 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Client registerClient(ClientDto clientDto) throws Exception {
+    public Client registerClient(ClientDto clientDto) {
         if (clientRepository.findByEmail(clientDto.getEmail()).isPresent()) {
-            //todo change to custom exception later
-            throw new Exception("User already exist.");
+            throw new BadCredentialsException("User already exist.");
         }
 
         Client client = new Client();
@@ -91,6 +92,7 @@ public class ClientServiceImpl implements ClientService {
         return createVerificationToken(UUID.randomUUID().toString(), token.getType(), client);
     }
 
+    @Transactional
     @Override
     public void deleteVerificationToken(String token) {
         verificationTokenRepository.deleteAllByToken(token);
