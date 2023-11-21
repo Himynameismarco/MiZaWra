@@ -41,7 +41,7 @@ public class EmailTemplateFactory {
     public SimpleMailMessage getForgetPassword(VerificationToken token, Locale locale) {
         SimpleMailMessage emailMessage = new SimpleMailMessage();
         String message = messages.getMessage("email.forgetPassword", null, locale);
-        String confirmationUrl = System.getenv("DOMAIN") + "/register/changePassword?token=" + token.getToken();
+        String confirmationUrl = System.getenv("DOMAIN") + "/setNewPassword?token=" + token.getToken();
 
         emailMessage.setTo(token.getClient().getEmail());
         emailMessage.setSubject("ForgetPassword");

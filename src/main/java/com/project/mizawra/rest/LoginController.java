@@ -67,7 +67,7 @@ public class LoginController {
     }
 
     @PostMapping("/savePassword")
-    public ResponseEntity<Object> savePassword(SavePasswordDto passwordDto) {
+    public ResponseEntity<Object> savePassword(@RequestBody @Valid SavePasswordDto passwordDto) {
         VerificationToken token = clientService.getVerificationToken(passwordDto.getTokenId());
         if (token == null || clientService.isTokenExpired(token)) {
             return ResponseEntity.badRequest().build();
