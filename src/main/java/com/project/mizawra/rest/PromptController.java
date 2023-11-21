@@ -30,6 +30,12 @@ public class PromptController {
     }
 
     private PromptDto convertPromptToDto(Prompt prompt) {
-        return new PromptDto(prompt.getId().toString(), prompt.getPrompt());
+        PromptDto promptDto = new PromptDto();
+        if (prompt != null) {
+            promptDto.setId(prompt.getId().toString());
+            promptDto.setMode(prompt.getMode().toString());
+            promptDto.setPrompt(prompt.getPrompt());
+        }
+        return promptDto;
     }
 }

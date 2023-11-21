@@ -78,8 +78,8 @@ public class JournalServiceImpl implements JournalService {
     private Journal convertDtoToEntity(JournalDto journalDto) throws Exception{
         Journal journal = new Journal();
 
-        if (StringUtils.hasText(journalDto.getPromptId())) {
-            journal.setPrompt(promptService.get(UUID.fromString(journalDto.getPromptId())));
+        if (StringUtils.hasText(journalDto.getPromptDto().getId())) {
+            journal.setPrompt(promptService.get(UUID.fromString(journalDto.getPromptDto().getId())));
         }
         journal.setTitle(journalDto.getTitle());
         journal.setBody(journalDto.getBody());

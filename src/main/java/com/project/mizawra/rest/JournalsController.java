@@ -1,7 +1,9 @@
 package com.project.mizawra.rest;
 
 import com.project.mizawra.models.Journal;
+import com.project.mizawra.models.Prompt;
 import com.project.mizawra.models.dto.JournalDto;
+import com.project.mizawra.models.dto.PromptDto;
 import com.project.mizawra.service.JournalService;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -35,7 +37,7 @@ public class JournalsController {
     }
 
     @DeleteMapping
-    public ResponseEntity<Object> deleteJournal(@RequestParam(name = "journalId") UUID journalId) throws Exception {
+    public ResponseEntity<Object> deleteJournal(@RequestParam(name = "journalId") UUID journalId) {
         journalService.delete(journalId);
         return ResponseEntity.ok().build();
     }
@@ -63,7 +65,17 @@ public class JournalsController {
     private JournalDto convertJournalToDto(Journal journal) throws Exception {
         String postedDate = journal.getPostedDate().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
         return new JournalDto(journal.getId().toString(),
-                journal.getPrompt() != null ? journal.getPrompt().getId().toString() : null,
+                convertPromptToDto(journal.getPrompt()),
                 journal.getTitle(), journal.getBody(), postedDate);
+    }
+
+    private PromptDto convertPromptToDto(Prompt prompt) {
+        PromptDto promptDto = new PromptDto();
+        if (prompt != null) {
+            promptDto.setId(prompt.getId().toString());
+            promptDto.setMode(prompt.getMode().toString());
+            promptDto.setPrompt(prompt.getPrompt());
+        }
+        return promptDto;
     }
 }
