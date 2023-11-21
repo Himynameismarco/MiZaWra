@@ -50,7 +50,7 @@ public class LoginController {
             return ResponseEntity.ok()
                     .header(HttpHeaders.AUTHORIZATION, jwtTokenService.createToken(request.getUsername())).body(jwtTokenService.createToken(request.getUsername()));
         } catch (BadCredentialsException ex) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
 
