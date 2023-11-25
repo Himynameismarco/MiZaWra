@@ -6,6 +6,7 @@ import com.project.mizawra.models.Client;
 import com.project.mizawra.models.VerificationToken;
 import com.project.mizawra.models.dto.ClientDto;
 import com.project.mizawra.service.ClientService;
+import com.project.mizawra.service.VerificationTokenService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.context.event.ApplicationEventMulticaster;
@@ -22,13 +23,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class RegisterController {
     private final ApplicationEventMulticaster eventMulticaster;
     private final ClientService clientService;
+    private final VerificationTokenService verificationTokenService;
     private final JavaMailSender mailSender;
     private final EmailTemplateFactory emailTemplateFactory;
 
     public RegisterController(ApplicationEventMulticaster eventMulticaster, ClientService clientService,
-                              JavaMailSender mailSender, EmailTemplateFactory emailTemplateFactory) {
+                              VerificationTokenService verificationTokenService, JavaMailSender mailSender,
+                              EmailTemplateFactory emailTemplateFactory) {
         this.eventMulticaster = eventMulticaster;
         this.clientService = clientService;
+        this.verificationTokenService = verificationTokenService;
         this.mailSender = mailSender;
         this.emailTemplateFactory = emailTemplateFactory;
     }
@@ -42,14 +46,14 @@ public class RegisterController {
 
     @PostMapping("/activate")
     public ResponseEntity<Object> registerActivation(@RequestParam("token") String token, HttpServletRequest request) {
-        VerificationToken verificationToken = clientService.getVerificationToken(token);
+        VerificationToken verificationToken = verificationTokenService.getVerificationToken(token);
         if (verificationToken == null) {
             return ResponseEntity.notFound().build();
         }
 
         Client client = verificationToken.getClient();
-        if (clientService.isTokenExpired(verificationToken)) {
-            VerificationToken newToken = clientService.regenerateVerificationToken(verificationToken);
+        if (verificationTokenService.isTokenExpired(verificationToken)) {
+            VerificationToken newToken = verificationTokenService.regenerateVerificationToken(verificationToken);
             mailSender.send(emailTemplateFactory.getRegisteredTokenRegenerated(newToken, request.getLocale()));
 
             return ResponseEntity.badRequest().build();
@@ -57,7 +61,7 @@ public class RegisterController {
 
         client.setActive(true);
         clientService.save(client);
-        clientService.deleteVerificationToken(verificationToken.getToken());
+        verificationTokenService.deleteVerificationToken(verificationToken.getToken());
         return ResponseEntity.ok().build();
     }
 }

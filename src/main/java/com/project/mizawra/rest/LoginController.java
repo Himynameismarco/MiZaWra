@@ -7,6 +7,7 @@ import com.project.mizawra.models.dto.AuthRequest;
 import com.project.mizawra.models.dto.SavePasswordDto;
 import com.project.mizawra.service.ClientService;
 import com.project.mizawra.service.JwtTokenService;
+import com.project.mizawra.service.VerificationTokenService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.context.event.ApplicationEventMulticaster;
@@ -25,13 +26,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class LoginController {
     private final ApplicationEventMulticaster eventMulticaster;
     private final ClientService clientService;
+    private final VerificationTokenService verificationTokenService;
     private final DaoAuthenticationProvider authenticationProvider;
     private final JwtTokenService jwtTokenService;
 
     public LoginController(ApplicationEventMulticaster eventMulticaster, ClientService clientService,
+                           VerificationTokenService verificationTokenService,
                            DaoAuthenticationProvider authenticationProvider, JwtTokenService jwtTokenService) {
         this.eventMulticaster = eventMulticaster;
         this.clientService = clientService;
+        this.verificationTokenService = verificationTokenService;
         this.authenticationProvider = authenticationProvider;
         this.jwtTokenService = jwtTokenService;
     }
@@ -68,12 +72,12 @@ public class LoginController {
 
     @PostMapping("/savePassword")
     public ResponseEntity<Object> savePassword(@RequestBody @Valid SavePasswordDto passwordDto) {
-        VerificationToken token = clientService.getVerificationToken(passwordDto.getTokenId());
-        if (token == null || clientService.isTokenExpired(token)) {
+        VerificationToken token = verificationTokenService.getVerificationToken(passwordDto.getTokenId());
+        if (token == null || verificationTokenService.isTokenExpired(token)) {
             return ResponseEntity.badRequest().build();
         }
         clientService.changeClientPassword(token.getClient(), passwordDto.getPassword());
-        clientService.deleteVerificationToken(passwordDto.getTokenId());
+        verificationTokenService.deleteVerificationToken(passwordDto.getTokenId());
         return ResponseEntity.ok().build();
     }
 }

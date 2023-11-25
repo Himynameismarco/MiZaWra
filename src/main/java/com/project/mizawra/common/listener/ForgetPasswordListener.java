@@ -5,7 +5,7 @@ import com.project.mizawra.common.event.OnForgetPasswordEvent;
 import com.project.mizawra.models.Client;
 import com.project.mizawra.models.TokenType;
 import com.project.mizawra.models.VerificationToken;
-import com.project.mizawra.service.ClientService;
+import com.project.mizawra.service.VerificationTokenService;
 import java.util.UUID;
 import org.springframework.context.ApplicationListener;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -13,13 +13,13 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ForgetPasswordListener implements ApplicationListener<OnForgetPasswordEvent> {
-    private final ClientService clientService;
+    private final VerificationTokenService verificationTokenService;
     private final EmailTemplateFactory emailTemplateFactory;
     private final JavaMailSender javaMailSender;
 
-    public ForgetPasswordListener(ClientService clientService, EmailTemplateFactory emailTemplateFactory,
+    public ForgetPasswordListener(VerificationTokenService verificationTokenService, EmailTemplateFactory emailTemplateFactory,
                                   JavaMailSender javaMailSender) {
-        this.clientService = clientService;
+        this.verificationTokenService = verificationTokenService;
         this.emailTemplateFactory = emailTemplateFactory;
         this.javaMailSender = javaMailSender;
     }
@@ -31,7 +31,7 @@ public class ForgetPasswordListener implements ApplicationListener<OnForgetPassw
 
     private void changePassword(OnForgetPasswordEvent event) {
         Client client = event.getClient();
-        VerificationToken verificationToken = clientService.createVerificationToken(UUID.randomUUID().toString(),
+        VerificationToken verificationToken = verificationTokenService.createVerificationToken(UUID.randomUUID().toString(),
                 TokenType.CHANGE_PASSWORD, client);
 
         javaMailSender.send(emailTemplateFactory.getForgetPassword(verificationToken, event.getLocale()));
