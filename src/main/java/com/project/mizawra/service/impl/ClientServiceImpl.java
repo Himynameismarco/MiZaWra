@@ -60,8 +60,8 @@ public class ClientServiceImpl implements ClientService {
         client.setFirstName(clientDto.getFirstName() != null ? clientDto.getFirstName() : client.getFirstName());
         client.setLastName(clientDto.getLastName() != null ? clientDto.getLastName() : client.getLastName());
 
-        if (clientDto.getOldPassword() != null && passwordEncoder.encode(clientDto.getOldPassword()).equals(client.getPassword())) {
-            client.setPassword(clientDto.getPassword());
+        if (clientDto.getOldPassword() != null && passwordEncoder.matches(clientDto.getOldPassword(), client.getPassword())) {
+            client.setPassword(passwordEncoder.encode(clientDto.getPassword()));
         } else if (clientDto.getOldPassword() != null) {
             throw new BadCredentialsException("Wrong password");
         }
