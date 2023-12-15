@@ -1,6 +1,7 @@
 package com.project.mizawra.rest;
 
 import com.project.mizawra.models.Client;
+import com.project.mizawra.models.Settings;
 import com.project.mizawra.models.dto.ClientDto;
 import com.project.mizawra.service.ClientService;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +28,41 @@ public class ClientController {
     @PutMapping
     public ResponseEntity<Object> editClient(@RequestBody ClientDto clientDto) {
         clientService.edit(clientDto);
+
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/settings")
+    public Settings getSettings() {
+        Settings clientSettings = clientService.getAuthenticatedClient().getSettings();
+        if (clientSettings != null) {
+            clientSettings.setId(null);
+            clientSettings.setClient(null);
+            return clientSettings;
+        }
+        return new Settings();
+    }
+
+    @PutMapping("/settings")
+    public ResponseEntity<Object> updateSettings(@RequestBody Settings settingsDto) {
+        Client client = clientService.getAuthenticatedClient();
+        Settings clientSettings = client.getSettings();
+
+        if (clientSettings == null) {
+            client.setSettings(settingsDto);
+        } else {
+            if (settingsDto.getLightTheme() != null) {
+                clientSettings.setLightTheme(settingsDto.getLightTheme());
+            }
+            if (settingsDto.getTimer() != null) {
+                clientSettings.setTimer(settingsDto.getTimer());
+            }
+            if (settingsDto.getLocale() != null) {
+                clientSettings.setLocale(settingsDto.getLocale());
+            }
+        }
+
+        clientService.save(client);
 
         return ResponseEntity.ok().build();
     }
