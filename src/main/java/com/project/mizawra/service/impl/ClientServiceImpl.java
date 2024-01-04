@@ -1,14 +1,10 @@
 package com.project.mizawra.service.impl;
 
 import com.project.mizawra.dao.ClientRepository;
-import com.project.mizawra.dao.VerificationTokenRepository;
 import com.project.mizawra.models.Client;
-import com.project.mizawra.models.TokenType;
-import com.project.mizawra.models.VerificationToken;
 import com.project.mizawra.models.dto.ClientDto;
 import com.project.mizawra.service.ClientService;
-import java.time.LocalDateTime;
-import java.util.UUID;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,13 +13,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class ClientServiceImpl implements ClientService {
     private final ClientRepository clientRepository;
-    private final VerificationTokenRepository verificationTokenRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public ClientServiceImpl(ClientRepository clientRepository, VerificationTokenRepository verificationTokenRepository,
-                             PasswordEncoder passwordEncoder) {
+    public ClientServiceImpl(ClientRepository clientRepository, PasswordEncoder passwordEncoder) {
         this.clientRepository = clientRepository;
-        this.verificationTokenRepository = verificationTokenRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -42,15 +35,9 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Client getClientById(String id) {
-        return clientRepository.findById(UUID.fromString(id)).orElse(null);
-    }
-
-    @Override
-    public Client registerClient(ClientDto clientDto) throws Exception {
+    public Client registerClient(ClientDto clientDto) {
         if (clientRepository.findByEmail(clientDto.getEmail()).isPresent()) {
-            //todo change to custom exception later
-            throw new Exception("User already exist.");
+            throw new BadCredentialsException("User already exist.");
         }
 
         Client client = new Client();
@@ -68,37 +55,24 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
+    public Client edit(ClientDto clientDto) {
+        Client client = getAuthenticatedClient();
+        client.setFirstName(clientDto.getFirstName() != null ? clientDto.getFirstName() : client.getFirstName());
+        client.setLastName(clientDto.getLastName() != null ? clientDto.getLastName() : client.getLastName());
+
+        if (clientDto.getOldPassword() != null && passwordEncoder.matches(clientDto.getOldPassword(), client.getPassword())) {
+            client.setPassword(passwordEncoder.encode(clientDto.getPassword()));
+        } else if (clientDto.getOldPassword() != null) {
+            throw new BadCredentialsException("Wrong password");
+        }
+
+        return save(client);
+    }
+
+    @Override
     public void changeClientPassword(Client client, String newPassword) {
         client.setPassword(passwordEncoder.encode(newPassword));
         save(client);
-    }
-
-    @Override
-    public VerificationToken getVerificationToken(String token) {
-        return verificationTokenRepository.findByToken(token).orElse(null);
-    }
-
-    @Override
-    public VerificationToken createVerificationToken(String token, TokenType type, Client client) {
-        return verificationTokenRepository.save(new VerificationToken(token, type, client));
-    }
-
-    @Override
-    public VerificationToken regenerateVerificationToken(VerificationToken token) {
-        Client client = token.getClient();
-
-        verificationTokenRepository.delete(token);
-        return createVerificationToken(UUID.randomUUID().toString(), token.getType(), client);
-    }
-
-    @Override
-    public void deleteVerificationToken(String token) {
-        verificationTokenRepository.deleteAllByToken(token);
-    }
-
-    @Override
-    public boolean isTokenExpired(VerificationToken token) {
-        return token.getExpiryDate().isBefore(LocalDateTime.now());
     }
 
     private boolean isAnonymous() {

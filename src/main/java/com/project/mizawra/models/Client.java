@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotBlank;
@@ -28,6 +29,9 @@ public class Client {
     private String password;
     @NotNull
     private Boolean active;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "settings_id")
+    private Settings settings;
     @OneToMany(mappedBy = "client")
     private List<VerificationToken> verificationToken;
     @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
@@ -90,6 +94,14 @@ public class Client {
 
     public void setActive(Boolean active) {
         this.active = active;
+    }
+
+    public Settings getSettings() {
+        return settings;
+    }
+
+    public void setSettings(Settings settings) {
+        this.settings = settings;
     }
 
     public List<VerificationToken> getVerificationToken() {
