@@ -85,7 +85,7 @@ public class Journal {
     public String getBody()
             throws NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException,
             InvalidKeyException {
-        return CipherUtil.decryptString(body);
+        return body == null ? null : CipherUtil.decryptString(body);
     }
 
     public void setBody(String body)
