@@ -5,6 +5,7 @@ import com.project.mizawra.models.Settings;
 import com.project.mizawra.models.dto.ClientDto;
 import com.project.mizawra.service.ClientService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,7 +28,11 @@ public class ClientController {
 
     @PutMapping
     public ResponseEntity<Object> editClient(@RequestBody ClientDto clientDto) {
-        clientService.edit(clientDto);
+        try {
+            clientService.edit(clientDto);
+        } catch (BadCredentialsException e) {
+            return ResponseEntity.badRequest().build();
+        }
 
         return ResponseEntity.ok().build();
     }
