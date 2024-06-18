@@ -1,6 +1,5 @@
 package com.project.mizawra.rest;
 
-import com.project.mizawra.models.Client;
 import com.project.mizawra.models.Settings;
 import com.project.mizawra.models.dto.ClientDto;
 import com.project.mizawra.service.ClientService;
@@ -44,25 +43,7 @@ public class ClientController {
 
     @PutMapping("/settings")
     public ResponseEntity<Object> updateSettings(@RequestBody Settings settingsDto) {
-        Client client = clientService.getAuthenticatedClient();
-        Settings clientSettings = client.getSettings();
-
-        if (clientSettings == null) {
-            client.setSettings(settingsDto);
-        } else {
-            if (settingsDto.getLightTheme() != null) {
-                clientSettings.setLightTheme(settingsDto.getLightTheme());
-            }
-            if (settingsDto.getTimer() != null) {
-                clientSettings.setTimer(settingsDto.getTimer());
-            }
-            if (settingsDto.getLocale() != null) {
-                clientSettings.setLocale(settingsDto.getLocale());
-            }
-        }
-
-        clientService.save(client);
-
+        clientService.updateSettings(settingsDto);
         return ResponseEntity.ok().build();
     }
 }

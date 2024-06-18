@@ -2,6 +2,7 @@ package com.project.mizawra.service.impl;
 
 import com.project.mizawra.dao.ClientRepository;
 import com.project.mizawra.models.Client;
+import com.project.mizawra.models.Settings;
 import com.project.mizawra.models.dto.ClientDto;
 import com.project.mizawra.service.ClientService;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -72,6 +73,22 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public void changeClientPassword(Client client, String newPassword) {
         client.setPassword(passwordEncoder.encode(newPassword));
+        save(client);
+    }
+
+    @Override
+    public void updateSettings(Settings settings) {
+        Client client = getAuthenticatedClient();
+        Settings clientSettings = client.getSettings();
+
+        if (clientSettings == null) {
+            client.setSettings(settings);
+        } else {
+            clientSettings.setLightTheme(settings.getLightTheme());
+            clientSettings.setTimer(settings.getTimer());
+            clientSettings.setLocale(settings.getLocale());
+        }
+
         save(client);
     }
 
