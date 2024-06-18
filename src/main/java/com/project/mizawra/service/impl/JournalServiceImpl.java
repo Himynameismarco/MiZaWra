@@ -22,6 +22,7 @@ public class JournalServiceImpl implements JournalService {
     private final ClientService clientService;
     private final PromptService promptService;
     private final JournalRepository journalRepository;
+    private static final Integer JOURNALS_SIZE = 9;
 
     public JournalServiceImpl(ClientService clientService, PromptService promptService,
                               JournalRepository journalRepository) {
@@ -38,14 +39,14 @@ public class JournalServiceImpl implements JournalService {
     @Override
     public List<Journal> getJournals(int page) {
         Client client = clientService.getAuthenticatedClient();
-        Pageable pageable = PageRequest.of(page, 9, Sort.by("postedDate").descending());
+        Pageable pageable = PageRequest.of(page, JOURNALS_SIZE, Sort.by("postedDate").descending());
         return journalRepository.findAllByOwner(client, pageable);
     }
 
     @Override
     public Long getPageCount() {
         Client client = clientService.getAuthenticatedClient();
-        return journalRepository.countByOwner(client) / 9 + 1;
+        return journalRepository.countByOwner(client) / JOURNALS_SIZE + 1;
     }
 
     @Override
