@@ -23,7 +23,7 @@ public class ClientController {
 
     @GetMapping
     public ClientDto getAuthenticatedClient() {
-        return convertClientToDto(clientService.getAuthenticatedClient());
+        return new ClientDto(clientService.getAuthenticatedClient());
     }
 
     @PutMapping
@@ -39,13 +39,7 @@ public class ClientController {
 
     @GetMapping("/settings")
     public Settings getSettings() {
-        Settings clientSettings = clientService.getAuthenticatedClient().getSettings();
-        if (clientSettings != null) {
-            clientSettings.setId(null);
-            clientSettings.setClient(null);
-            return clientSettings;
-        }
-        return new Settings();
+        return clientService.getAuthenticatedClient().getSettings();
     }
 
     @PutMapping("/settings")
@@ -70,15 +64,5 @@ public class ClientController {
         clientService.save(client);
 
         return ResponseEntity.ok().build();
-    }
-
-    private ClientDto convertClientToDto(Client client) {
-        ClientDto clientDto = new ClientDto();
-        if (client != null) {
-            clientDto.setFirstName(client.getFirstName());
-            clientDto.setLastName(client.getLastName());
-            clientDto.setEmail(client.getEmail());
-        }
-        return clientDto;
     }
 }
