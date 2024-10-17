@@ -7,7 +7,6 @@ import com.project.mizawra.models.dto.JournalDto;
 import com.project.mizawra.service.ClientService;
 import com.project.mizawra.service.JournalService;
 import com.project.mizawra.service.PromptService;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -58,8 +57,10 @@ public class JournalServiceImpl implements JournalService {
             journal.setTitle(journalDto.getTitle());
             journal.setBody(journalDto.getBody());
         } else {
-            journal = convertDtoToEntity(journalDto);
-            journal.setPostedDate(LocalDateTime.now());
+            journal = new Journal(journalDto);
+            if (StringUtils.hasText(journalDto.getPromptDto().getId())) {
+                journal.setPrompt(promptService.get(UUID.fromString(journalDto.getPromptDto().getId())));
+            }
             journal.setOwner(clientService.getAuthenticatedClient());
         }
 
@@ -74,17 +75,5 @@ public class JournalServiceImpl implements JournalService {
     @Override
     public Long countJournalsForAuthenticatedUser() {
         return journalRepository.countByOwner(clientService.getAuthenticatedClient());
-    }
-
-    private Journal convertDtoToEntity(JournalDto journalDto) throws Exception{
-        Journal journal = new Journal();
-
-        if (StringUtils.hasText(journalDto.getPromptDto().getId())) {
-            journal.setPrompt(promptService.get(UUID.fromString(journalDto.getPromptDto().getId())));
-        }
-        journal.setTitle(journalDto.getTitle());
-        journal.setBody(journalDto.getBody());
-
-        return journal;
     }
 }
