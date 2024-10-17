@@ -1,6 +1,7 @@
 package com.project.mizawra.models;
 
 import com.project.mizawra.common.CipherUtil;
+import com.project.mizawra.models.dto.JournalDto;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -40,6 +41,14 @@ public class Journal {
         this.prompt = prompt;
         this.title = title;
         this.body = body;
+    }
+
+    public Journal(JournalDto journalDto)
+            throws NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException,
+            InvalidKeyException {
+        this.title = journalDto.getTitle();
+        this.setBody(journalDto.getBody());
+        this.postedDate = LocalDateTime.now();
     }
 
     public UUID getId() {

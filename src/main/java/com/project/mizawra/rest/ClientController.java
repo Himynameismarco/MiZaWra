@@ -1,6 +1,5 @@
 package com.project.mizawra.rest;
 
-import com.project.mizawra.models.Client;
 import com.project.mizawra.models.Settings;
 import com.project.mizawra.models.dto.ClientDto;
 import com.project.mizawra.service.ClientService;
@@ -23,7 +22,7 @@ public class ClientController {
 
     @GetMapping
     public ClientDto getAuthenticatedClient() {
-        return convertClientToDto(clientService.getAuthenticatedClient());
+        return new ClientDto(clientService.getAuthenticatedClient());
     }
 
     @PutMapping
@@ -39,46 +38,12 @@ public class ClientController {
 
     @GetMapping("/settings")
     public Settings getSettings() {
-        Settings clientSettings = clientService.getAuthenticatedClient().getSettings();
-        if (clientSettings != null) {
-            clientSettings.setId(null);
-            clientSettings.setClient(null);
-            return clientSettings;
-        }
-        return new Settings();
+        return clientService.getAuthenticatedClient().getSettings();
     }
 
     @PutMapping("/settings")
     public ResponseEntity<Object> updateSettings(@RequestBody Settings settingsDto) {
-        Client client = clientService.getAuthenticatedClient();
-        Settings clientSettings = client.getSettings();
-
-        if (clientSettings == null) {
-            client.setSettings(settingsDto);
-        } else {
-            if (settingsDto.getLightTheme() != null) {
-                clientSettings.setLightTheme(settingsDto.getLightTheme());
-            }
-            if (settingsDto.getTimer() != null) {
-                clientSettings.setTimer(settingsDto.getTimer());
-            }
-            if (settingsDto.getLocale() != null) {
-                clientSettings.setLocale(settingsDto.getLocale());
-            }
-        }
-
-        clientService.save(client);
-
+        clientService.updateSettings(settingsDto);
         return ResponseEntity.ok().build();
-    }
-
-    private ClientDto convertClientToDto(Client client) {
-        ClientDto clientDto = new ClientDto();
-        if (client != null) {
-            clientDto.setFirstName(client.getFirstName());
-            clientDto.setLastName(client.getLastName());
-            clientDto.setEmail(client.getEmail());
-        }
-        return clientDto;
     }
 }

@@ -1,6 +1,5 @@
 package com.project.mizawra.rest;
 
-import com.project.mizawra.models.Prompt;
 import com.project.mizawra.models.dto.PromptDto;
 import com.project.mizawra.service.PromptService;
 import java.util.Locale;
@@ -21,21 +20,11 @@ public class PromptController {
 
     @GetMapping
     public PromptDto getPromptById(@RequestParam UUID id) {
-        return convertPromptToDto(promptService.get(id));
+        return new PromptDto(promptService.get(id));
     }
 
     @GetMapping("/random")
     public PromptDto getRandomPromptByMode(@RequestParam String mode) {
-        return convertPromptToDto(promptService.getRandomByModeAndLocale(mode, Locale.ENGLISH));
-    }
-
-    private PromptDto convertPromptToDto(Prompt prompt) {
-        PromptDto promptDto = new PromptDto();
-        if (prompt != null) {
-            promptDto.setId(prompt.getId().toString());
-            promptDto.setMode(prompt.getMode().toString());
-            promptDto.setPrompt(prompt.getPrompt());
-        }
-        return promptDto;
+        return new PromptDto(promptService.getRandomByModeAndLocale(mode, Locale.ENGLISH));
     }
 }

@@ -7,7 +7,6 @@ import com.project.mizawra.models.dto.JournalDto;
 import com.project.mizawra.service.ClientService;
 import com.project.mizawra.service.JournalService;
 import com.project.mizawra.service.PromptService;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -22,6 +21,7 @@ public class JournalServiceImpl implements JournalService {
     private final ClientService clientService;
     private final PromptService promptService;
     private final JournalRepository journalRepository;
+    private static final Integer JOURNALS_SIZE = 9;
 
     public JournalServiceImpl(ClientService clientService, PromptService promptService,
                               JournalRepository journalRepository) {
@@ -38,14 +38,14 @@ public class JournalServiceImpl implements JournalService {
     @Override
     public List<Journal> getJournals(int page) {
         Client client = clientService.getAuthenticatedClient();
-        Pageable pageable = PageRequest.of(page, 9, Sort.by("postedDate").descending());
+        Pageable pageable = PageRequest.of(page, JOURNALS_SIZE, Sort.by("postedDate").descending());
         return journalRepository.findAllByOwner(client, pageable);
     }
 
     @Override
     public Long getPageCount() {
         Client client = clientService.getAuthenticatedClient();
-        return journalRepository.countByOwner(client) / 9 + 1;
+        return journalRepository.countByOwner(client) / JOURNALS_SIZE + 1;
     }
 
     @Override
@@ -57,8 +57,10 @@ public class JournalServiceImpl implements JournalService {
             journal.setTitle(journalDto.getTitle());
             journal.setBody(journalDto.getBody());
         } else {
-            journal = convertDtoToEntity(journalDto);
-            journal.setPostedDate(LocalDateTime.now());
+            journal = new Journal(journalDto);
+            if (StringUtils.hasText(journalDto.getPromptDto().getId())) {
+                journal.setPrompt(promptService.get(UUID.fromString(journalDto.getPromptDto().getId())));
+            }
             journal.setOwner(clientService.getAuthenticatedClient());
         }
 
@@ -73,17 +75,5 @@ public class JournalServiceImpl implements JournalService {
     @Override
     public Long countJournalsForAuthenticatedUser() {
         return journalRepository.countByOwner(clientService.getAuthenticatedClient());
-    }
-
-    private Journal convertDtoToEntity(JournalDto journalDto) throws Exception{
-        Journal journal = new Journal();
-
-        if (StringUtils.hasText(journalDto.getPromptDto().getId())) {
-            journal.setPrompt(promptService.get(UUID.fromString(journalDto.getPromptDto().getId())));
-        }
-        journal.setTitle(journalDto.getTitle());
-        journal.setBody(journalDto.getBody());
-
-        return journal;
     }
 }

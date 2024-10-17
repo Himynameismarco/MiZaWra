@@ -1,5 +1,7 @@
 package com.project.mizawra.models.dto;
 
+import com.project.mizawra.models.Prompt;
+
 public class PromptDto {
     private String id;
     private String mode;
@@ -8,10 +10,12 @@ public class PromptDto {
     public PromptDto() {
     }
 
-    public PromptDto(String id, String mode, String prompt) {
-        this.id = id;
-        this.mode = mode;
-        this.prompt = prompt;
+    public PromptDto(Prompt prompt) {
+        if (prompt != null) {
+            setId(prompt.getId().toString());
+            setMode(prompt.getMode().toString());
+            setPrompt(prompt.getPrompt());
+        }
     }
 
     public String getId() {

@@ -1,11 +1,8 @@
 package com.project.mizawra.rest;
 
 import com.project.mizawra.models.Journal;
-import com.project.mizawra.models.Prompt;
 import com.project.mizawra.models.dto.JournalDto;
-import com.project.mizawra.models.dto.PromptDto;
 import com.project.mizawra.service.JournalService;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -29,11 +26,11 @@ public class JournalsController {
 
     @GetMapping
     public JournalDto editJournal(@RequestParam(name = "journalId") UUID journalId) throws Exception {
-        return convertJournalToDto(journalService.get(journalId).orElse(new Journal()));
+        return new JournalDto(journalService.get(journalId).orElseThrow());
     }
     @PostMapping
     public JournalDto saveJournal(@RequestBody JournalDto journalDto) throws Exception {
-        return convertJournalToDto(journalService.save(journalDto));
+        return new JournalDto(journalService.save(journalDto));
     }
 
     @DeleteMapping
@@ -52,7 +49,7 @@ public class JournalsController {
         int iPage = page != null ? page : 0;
         List<JournalDto> result = new ArrayList<>();
         for (Journal journal : journalService.getJournals(iPage)) {
-            result.add(convertJournalToDto(journal));
+            result.add(new JournalDto(journal));
         }
         return result;
     }
@@ -60,22 +57,5 @@ public class JournalsController {
     @GetMapping("/pages")
     public Long getPages() {
         return journalService.getPageCount();
-    }
-
-    private JournalDto convertJournalToDto(Journal journal) throws Exception {
-        String postedDate = journal.getPostedDate().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
-        return new JournalDto(journal.getId().toString(),
-                convertPromptToDto(journal.getPrompt()),
-                journal.getTitle(), journal.getBody(), postedDate);
-    }
-
-    private PromptDto convertPromptToDto(Prompt prompt) {
-        PromptDto promptDto = new PromptDto();
-        if (prompt != null) {
-            promptDto.setId(prompt.getId().toString());
-            promptDto.setMode(prompt.getMode().toString());
-            promptDto.setPrompt(prompt.getPrompt());
-        }
-        return promptDto;
     }
 }
