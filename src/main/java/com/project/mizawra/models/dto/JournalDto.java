@@ -1,5 +1,8 @@
 package com.project.mizawra.models.dto;
 
+import com.project.mizawra.models.Journal;
+import java.time.format.DateTimeFormatter;
+
 public class JournalDto {
     private String id;
     private PromptDto promptDto;
@@ -10,19 +13,15 @@ public class JournalDto {
     public JournalDto() {
     }
 
-    public JournalDto(String id, String title, String body, String postedDate) {
-        this.id = id;
-        this.title = title;
-        this.body = body;
-        this.postedDate = postedDate;
-    }
+    public JournalDto(Journal journal) throws Exception {
+        this.id = journal.getId().toString();
+        this.title = journal.getTitle();
+        this.body = journal.getBody();
+        this.postedDate = journal.getPostedDate().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
 
-    public JournalDto(String id, PromptDto promptDto, String title, String body, String postedDate) {
-        this.id = id;
-        this.promptDto = promptDto;
-        this.title = title;
-        this.body = body;
-        this.postedDate = postedDate;
+        if (journal.getPrompt() != null) {
+            this.promptDto = new PromptDto(journal.getPrompt());
+        }
     }
 
     public String getId() {

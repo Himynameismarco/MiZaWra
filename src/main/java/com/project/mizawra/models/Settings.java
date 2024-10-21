@@ -1,5 +1,6 @@
 package com.project.mizawra.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -10,10 +11,12 @@ import java.util.UUID;
 public class Settings {
     @Id
     @GeneratedValue
+    @JsonIgnore
     private UUID id;
     private Boolean lightTheme;
     private Long timer;
     private String locale;
+    @JsonIgnore
     @OneToOne(mappedBy = "settings")
     private Client client;
 

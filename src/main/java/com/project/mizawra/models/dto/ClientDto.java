@@ -1,5 +1,6 @@
 package com.project.mizawra.models.dto;
 
+import com.project.mizawra.models.Client;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
@@ -17,11 +18,12 @@ public class ClientDto {
     public ClientDto() {
     }
 
-    public ClientDto(String firstName, String lastName, String email, String password) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
+    public ClientDto(Client client) {
+        if (client != null) {
+            setFirstName(client.getFirstName());
+            setLastName(client.getLastName());
+            setEmail(client.getEmail());
+        }
     }
 
     public String getFirstName() {
