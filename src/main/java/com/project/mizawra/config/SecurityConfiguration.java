@@ -1,5 +1,6 @@
 package com.project.mizawra.config;
 
+import jakarta.servlet.DispatcherType;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -43,6 +44,7 @@ public class SecurityConfiguration {
 
         http.authorizeHttpRequests()
                 .requestMatchers("/login", "/register/**", "/forgetPassword", "/savePassword").permitAll()
+                .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
                 .anyRequest().authenticated().and();
 
         http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
