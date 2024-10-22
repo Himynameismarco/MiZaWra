@@ -63,7 +63,7 @@ public class LoginController {
             BadCredentialsException {
         Client client = clientService.getClient(email);
         if (client == null) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.badRequest().build();
         }
 
         eventMulticaster.multicastEvent(new OnForgetPasswordEvent(client, request.getLocale()));
